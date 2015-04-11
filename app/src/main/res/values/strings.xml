@@ -6,4 +6,9 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_travels">TravelsActivity</string>
     <string name="title_activity_travel">TravelActivity</string>
+
+    <string name="enter">Entrar</string>
+
+    <string name="add_travel">Adicionar viagem</string>
+
 </resources>
