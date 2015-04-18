@@ -10,5 +10,6 @@
     <string name="enter">Entrar</string>
 
     <string name="add_travel">Adicionar viagem</string>
+    <string name="title_activity_new_travel">NewTravelActivity</string>
 
 </resources>
