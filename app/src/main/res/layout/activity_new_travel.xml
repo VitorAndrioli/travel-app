@@ -16,11 +16,12 @@
     <EditText android:id="@+id/budget"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
         android:hint="Dinheiros" />
 
-    <DatePicker android:id="@+id/begining"
+    <!--<DatePicker android:id="@+id/begining"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" />-->
 
     <Button
         android:layout_width="wrap_content"
