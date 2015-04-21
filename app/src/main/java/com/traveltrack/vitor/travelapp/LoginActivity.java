@@ -44,7 +44,6 @@ public class LoginActivity extends Activity {
 
         SharedPreferences shared_preferences = getSharedPreferences("USER_DATA", 0);
         SharedPreferences.Editor editor = shared_preferences.edit();
-        Log.d("debug", user.getId() + "-----------------------");
         editor.putLong("user_id", user.getId());
         editor.commit();
 

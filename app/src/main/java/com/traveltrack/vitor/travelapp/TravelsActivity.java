@@ -63,10 +63,9 @@ public class TravelsActivity extends Activity {
 
         String travel_name = ((TextView) ll.getChildAt(0)).getText().toString();
         Travel travel = Travel.find(Travel.class, "name = ?", travel_name).get(0);
-
         Intent i = new Intent(TravelsActivity.this, TravelActivity.class);
-        
-
+        i.putExtra("travel_id", travel.getId().toString());
+        startActivity(i);
 
     }
 
@@ -74,6 +73,17 @@ public class TravelsActivity extends Activity {
         Intent i = new Intent(TravelsActivity.this, NewTravelActivity.class);
         startActivity(i);
 
+    }
+
+    public void logout(View v) {
+        SharedPreferences shared_preferences = getSharedPreferences("USER_DATA", 0);
+        SharedPreferences.Editor editor = shared_preferences.edit();
+        editor.remove("user_id");
+        editor.commit();
+
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 
 }
