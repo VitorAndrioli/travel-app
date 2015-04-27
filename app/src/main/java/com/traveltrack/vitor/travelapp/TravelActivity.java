@@ -1,21 +1,33 @@
 package com.traveltrack.vitor.travelapp;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
+import android.os.Environment;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.net.Uri.*;
+
 
 public class TravelActivity extends Activity {
-    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +47,10 @@ public class TravelActivity extends Activity {
 
         ((TextView) findViewById(R.id.name)).setText(travel.name);
         ((TextView) findViewById(R.id.budget)).setText(String.valueOf(travel_user.budget));
+        Log.d("debug", travel.image_uri + "---------------------------");
+        if (travel.image_uri != null)
+            ((ImageView) findViewById(R.id.image)).setImageURI(parse(travel.image_uri));
+
     }
 
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-    }
 }
