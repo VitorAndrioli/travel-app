@@ -3,18 +3,12 @@ package com.traveltrack.vitor.travelapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -44,16 +38,12 @@ public class TravelsActivity extends Activity {
         LayoutInflater inflater = this.getLayoutInflater();
 
         for (int i=0; i< travels.size(); i++) {
-
-
             row = inflater.inflate(R.layout.travel, null);
 
             TextView tv = (TextView) row.findViewById(R.id.name);
             tv.setText(travels.get(i).travel.name);
 
             ((LinearLayout) linear_layout).addView(row);
-
-
         }
 
     }

@@ -1,33 +1,21 @@
 package com.traveltrack.vitor.travelapp;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.net.Uri;
-import android.os.Environment;
-import android.os.Parcelable;
-import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.net.Uri.*;
+import static android.net.Uri.parse;
 
 
 public class TravelActivity extends Activity {
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy", Locale.US);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +35,17 @@ public class TravelActivity extends Activity {
 
         ((TextView) findViewById(R.id.name)).setText(travel.name);
         ((TextView) findViewById(R.id.budget)).setText(String.valueOf(travel_user.budget));
-        Log.d("debug", travel.image_uri + "---------------------------");
+        ((TextView) findViewById(R.id.beginning)).setText(sdf.format(travel.beginning));
+        ((TextView) findViewById(R.id.end)).setText(sdf.format(travel.end));
         if (travel.image_uri != null)
             ((ImageView) findViewById(R.id.image)).setImageURI(parse(travel.image_uri));
 
+    }
+
+    public void addExpense(View v) {
+        Intent i = new Intent(TravelActivity.this, NewExpenseActivity.class);
+        
+        startActivity(i);
     }
 
 }

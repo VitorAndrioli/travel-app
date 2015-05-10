@@ -1,10 +1,7 @@
 package com.traveltrack.vitor.travelapp;
 
-import android.net.Uri;
-
 import com.orm.SugarRecord;
 
-import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
@@ -21,26 +18,17 @@ public class Travel extends SugarRecord<Travel> {
 
     }
 
-    public Travel(String name) {
+    public Travel(String name, String image_uri, Date beginning, Date end) {
         this.name = name;
+        this.image_uri = image_uri;
+        this.beginning = beginning;
+        this.end = end;
     }
 
     public Travel(String name, Date beginning, Date end) {
         this.name = name;
         this.beginning = beginning;
         this.end = end;
-    }
-
-    public Travel(String name, String image_uri) {
-        this.name = name;
-        this.image_uri = image_uri;
-    }
-
-    public Travel(String name, Date beginning, Date end, String image_uri) {
-        this.name = name;
-        this.beginning = beginning;
-        this.end = end;
-        this.image_uri = image_uri;
     }
 
     public List<Expense> getExpenses() {

@@ -1,26 +1,29 @@
 package com.traveltrack.vitor.travelapp;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static android.net.Uri.fromFile;
 
@@ -28,33 +31,66 @@ import static android.net.Uri.fromFile;
 public class NewTravelActivity extends Activity {
     Travel travel;
     Uri selectedImageUri;
+    EditText edittext;
+    Calendar myCalendar;
+    DatePickerDialog.OnDateSetListener date;
+    Date beginning;
+    Date end;
+
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy", Locale.US);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_travel);
 
-        openImageIntent();
+        myCalendar = Calendar.getInstance();
+
+    }
+
+    public void getDate(final View v) {
+        date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel(v);
+            }
+
+        };
+        new DatePickerDialog(NewTravelActivity.this, date,
+                myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private void updateLabel(View v) {
+        Date date = myCalendar.getTime();
+        ((TextView) v).setText(sdf.format( date ));
+
+        if (v.getId() == R.id.beginning)
+            beginning = date;
+        else
+            end = date;
+
 
     }
 
 
     public void create(View view) {
         String name = ((EditText) findViewById(R.id.name)).getText().toString();
-        double budget = 0.0;
+        double budget = 0;
 
         String budget_text = ((EditText) findViewById(R.id.budget)).getText().toString();
-
-        if (budget_text != null || !budget_text.isEmpty())
+        if (budget_text != null || !budget_text.isEmpty()) {
             budget = Double.parseDouble(budget_text);
+        }
 
         SharedPreferences shared_preferences = getSharedPreferences("USER_DATA", 0);
         long user_id = shared_preferences.getLong("user_id", 0);
         User user = User.findById(User.class, user_id);
 
-        Log.d("debug", ((selectedImageUri == null) ? "NULL" : selectedImageUri.toString()) + "=========================");
-
-        travel = new Travel(name, selectedImageUri.toString());
+        travel = new Travel(name, selectedImageUri.toString(), beginning, end);
         travel.save();
 
         TravelUser travel_user = new TravelUser(travel, user, budget);
@@ -65,15 +101,18 @@ public class NewTravelActivity extends Activity {
 
     }
 
+    public void addPicture(View v) {
+        openImageIntent();
+    }
+
     static final int SELECT_PICTURE = 1;
     private Uri outputFileUri;
-
     private void openImageIntent() {
 
         final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "MyDir" + File.separator);
         root.mkdirs();
-        final String fname = "img_"+ System.currentTimeMillis() + ".jpg";
-        final File sdImageMainDirectory = new File(root, fname);
+        final String file_name = "img_"+ System.currentTimeMillis() + ".jpg";
+        final File sdImageMainDirectory = new File(root, file_name);
         outputFileUri = fromFile(sdImageMainDirectory);
 
         // Camera.
@@ -125,8 +164,6 @@ public class NewTravelActivity extends Activity {
                 } else {
                     selectedImageUri = data == null ? null : data.getData();
                 }
-                Log.d("debug", selectedImageUri + "--------------------");
-
             }
         }
 
