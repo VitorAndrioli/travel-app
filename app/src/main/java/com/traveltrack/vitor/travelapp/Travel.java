@@ -12,15 +12,15 @@ public class Travel extends SugarRecord<Travel> {
     String name;
     Date beginning;
     Date end;
-    String image_uri;
+    String imageURI;
 
     public Travel() {
 
     }
 
-    public Travel(String name, String image_uri, Date beginning, Date end) {
+    public Travel(String name, String imageURI, Date beginning, Date end) {
         this.name = name;
-        this.image_uri = image_uri;
+        this.imageURI = imageURI;
         this.beginning = beginning;
         this.end = end;
     }

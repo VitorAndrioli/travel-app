@@ -37,14 +37,14 @@ public class TravelActivity extends Activity {
         ((TextView) findViewById(R.id.budget)).setText(String.valueOf(travel_user.budget));
         ((TextView) findViewById(R.id.beginning)).setText(sdf.format(travel.beginning));
         ((TextView) findViewById(R.id.end)).setText(sdf.format(travel.end));
-        if (travel.image_uri != null)
-            ((ImageView) findViewById(R.id.image)).setImageURI(parse(travel.image_uri));
+        if (travel.imageURI != null)
+            ((ImageView) findViewById(R.id.image)).setImageURI(parse(travel.imageURI));
 
     }
 
     public void addExpense(View v) {
         Intent i = new Intent(TravelActivity.this, NewExpenseActivity.class);
-        
+
         startActivity(i);
     }
 

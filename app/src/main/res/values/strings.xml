@@ -6,11 +6,22 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_travels">TravelsActivity</string>
     <string name="title_activity_travel">TravelActivity</string>
-
-    <string name="enter">Entrar</string>
-
-    <string name="add_travel">Adicionar viagem</string>
+    <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_new_travel">NewTravelActivity</string>
     <string name="title_activity_new_expense">newExpenseActivity</string>
+
+    <string name="email">E-mail</string>
+    <string name="password">Senha</string>
+    <string name="enter">Entrar</string>
+    <string name="register">Cadastre-se</string>
+
+    <string name="name">Nome</string>
+    <string name="send">Enviar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="password_confirmation">Confirme sua senha</string>
+    <string name="password_error">*Senhas não conferem</string>
+
+    <string name="add_travel">Adicionar viagem</string>
+
 
 </resources>

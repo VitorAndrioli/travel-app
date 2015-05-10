@@ -2,7 +2,6 @@ package com.traveltrack.vitor.travelapp;
 
 import com.orm.SugarRecord;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class User extends SugarRecord<User> {
@@ -19,8 +18,8 @@ public class User extends SugarRecord<User> {
     }
 
     public List<TravelUser> getTravels() {
-        List<TravelUser> user_travels = TravelUser.find(TravelUser.class, "user = ?", this.getId().toString());
+        List<TravelUser> userTravels = TravelUser.find(TravelUser.class, "user = ?", this.getId().toString());
 
-        return user_travels;
+        return userTravels;
     }
 }

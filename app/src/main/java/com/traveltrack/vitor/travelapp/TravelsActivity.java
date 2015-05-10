@@ -3,16 +3,21 @@ package com.traveltrack.vitor.travelapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 
 public class TravelsActivity extends Activity {
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy", Locale.US);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,19 +25,16 @@ public class TravelsActivity extends Activity {
         setContentView(R.layout.activity_travels);
 
         SharedPreferences shared_preferences = getSharedPreferences("USER_DATA", 0);
-        long user_id = shared_preferences.getLong("user_id", 0);
-        User user = User.findById(User.class, user_id);
-
-        if (user != null)
-            ((TextView) findViewById(R.id.user_name)).setText(user.name);
+        long userId = shared_preferences.getLong("user_id", 0);
+        User user = User.findById(User.class, userId);
 
         List<TravelUser> travels = user.getTravels();
 
-        View linear_layout = findViewById(R.id.travel_list);
-        LinearLayout text_view = (LinearLayout)getLayoutInflater().inflate(R.layout.travel, null);
+        View travelsList = findViewById(R.id.travel_list);
+        LinearLayout travel = (LinearLayout)getLayoutInflater().inflate(R.layout.travel, null);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        text_view.setLayoutParams(lp);
+        travel.setLayoutParams(lp);
 
         View row = null;
         LayoutInflater inflater = this.getLayoutInflater();
@@ -40,19 +42,26 @@ public class TravelsActivity extends Activity {
         for (int i=0; i< travels.size(); i++) {
             row = inflater.inflate(R.layout.travel, null);
 
-            TextView tv = (TextView) row.findViewById(R.id.name);
-            tv.setText(travels.get(i).travel.name);
+            TextView name = (TextView) row.findViewById(R.id.name);
+            TextView date = (TextView) row.findViewById(R.id.date);
+            ImageView picture = (ImageView) row.findViewById(R.id.picture);
 
-            ((LinearLayout) linear_layout).addView(row);
+            name.setText(travels.get(i).travel.name);
+            date.setText(sdf.format( travels.get(i).travel.beginning ) + " - " + sdf.format( travels.get(i).travel.end ));
+            picture.setImageURI(Uri.parse(travels.get(i).travel.imageURI));
+
+            ((LinearLayout) travelsList).addView(row);
         }
 
     }
 
     public void openTravel(View view) {
-        LinearLayout ll = (LinearLayout) view;
+        LinearLayout travelField = (LinearLayout) ((LinearLayout) view).getChildAt(1);
 
-        String travel_name = ((TextView) ll.getChildAt(0)).getText().toString();
-        Travel travel = Travel.find(Travel.class, "name = ?", travel_name).get(0);
+
+        String travelName = ((TextView) travelField.getChildAt(0)).getText().toString();
+
+        Travel travel = Travel.find(Travel.class, "name = ?", travelName).get(0);
         Intent i = new Intent(TravelsActivity.this, TravelActivity.class);
         i.putExtra("travel_id", travel.getId().toString());
         startActivity(i);

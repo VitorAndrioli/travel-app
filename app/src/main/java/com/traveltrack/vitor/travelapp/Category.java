@@ -7,12 +7,14 @@ import com.orm.SugarRecord;
  */
 public class Category extends SugarRecord<Category> {
     String name;
+    String uri;
 
     public Category() {
 
     }
 
-    public Category(String name) {
+    public Category(String name, String uri) {
         this.name = name;
+        this.uri = uri;
     }
 }
