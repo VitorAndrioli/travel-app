@@ -26,7 +26,7 @@ public class RegisterActivity extends Activity {
         passwordConfirmation = ((EditText) findViewById(R.id.password_confirmation)).getText().toString();
 
         if ( password.equals( passwordConfirmation ) ) {
-            User user = new User(name, email);
+            User user = new User(name, email, password);
             user.save();
 
             SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);

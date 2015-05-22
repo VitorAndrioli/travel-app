@@ -5,9 +5,6 @@ import com.orm.SugarRecord;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by vitor on 18/04/15.
- */
 public class Travel extends SugarRecord<Travel> {
     String name;
     Date beginning;

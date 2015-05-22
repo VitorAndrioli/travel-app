@@ -12,6 +12,7 @@
 
     <string name="email">E-mail</string>
     <string name="password">Senha</string>
+    <string name="login_error">E-mail ou senha inválidos</string>
     <string name="enter">Entrar</string>
     <string name="register">Cadastre-se</string>
 
@@ -19,9 +20,13 @@
     <string name="send">Enviar</string>
     <string name="cancel">Cancelar</string>
     <string name="password_confirmation">Confirme sua senha</string>
-    <string name="password_error">*Senhas não conferem</string>
+    <string name="password_error">Senhas não conferem</string>
 
     <string name="add_travel">Adicionar viagem</string>
 
+    <string name="add_expense">Adicionar despesa</string>
+
+    <string name="title_activity_graph">GraphActivity</string>
+    <string name="go_to_graph">Gráfico</string>
 
 </resources>

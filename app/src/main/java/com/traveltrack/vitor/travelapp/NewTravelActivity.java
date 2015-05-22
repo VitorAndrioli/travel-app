@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -31,7 +32,6 @@ import static android.net.Uri.fromFile;
 public class NewTravelActivity extends Activity {
     Travel travel;
     Uri selectedImageUri;
-    EditText edittext;
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener date;
     Date beginning;
@@ -39,58 +39,31 @@ public class NewTravelActivity extends Activity {
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy", Locale.US);
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_travel);
 
-        myCalendar = Calendar.getInstance();
-
     }
-
-    public void getDate(final View v) {
-        date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel(v);
-            }
-
-        };
-        new DatePickerDialog(NewTravelActivity.this, date,
-                myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-    }
-
-    private void updateLabel(View v) {
-        Date date = myCalendar.getTime();
-        ((TextView) v).setText(sdf.format( date ));
-
-        if (v.getId() == R.id.beginning)
-            beginning = date;
-        else
-            end = date;
-
-
-    }
-
 
     public void create(View view) {
         String name = ((EditText) findViewById(R.id.name)).getText().toString();
-        double budget = 0;
-
-        String budget_text = ((EditText) findViewById(R.id.budget)).getText().toString();
-        if (budget_text != null || !budget_text.isEmpty()) {
-            budget = Double.parseDouble(budget_text);
+        if (name.isEmpty()) {
+            return;
         }
 
-        SharedPreferences shared_preferences = getSharedPreferences("USER_DATA", 0);
-        long user_id = shared_preferences.getLong("user_id", 0);
-        User user = User.findById(User.class, user_id);
+        String budgetText = ((EditText) findViewById(R.id.budget)).getText().toString();
+        double budget = budgetText.isEmpty() ? 0 : Double.parseDouble(budgetText);
 
-        travel = new Travel(name, selectedImageUri.toString(), beginning, end);
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);
+        long userId = sharedPreferences.getLong("user_id", 0);
+        User user = User.findById(User.class, userId);
+
+        travel = new Travel(name,
+                selectedImageUri == null ? "android.resource://com.traveltrack.vitor.travelapp/drawable/travel_default" : selectedImageUri.toString(),
+                beginning,
+                end);
+
         travel.save();
 
         TravelUser travel_user = new TravelUser(travel, user, budget);
@@ -101,9 +74,38 @@ public class NewTravelActivity extends Activity {
 
     }
 
+    public void getDate(final View view) {
+        myCalendar = Calendar.getInstance();
+        date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker dateView, int year, int monthOfYear, int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel(view);
+            }
+
+        };
+
+        new DatePickerDialog(NewTravelActivity.this, date,
+                myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private void updateLabel(View view) {
+        Date date = myCalendar.getTime();
+        ((TextView) view).setText( sdf.format(date) );
+
+        if (view.getId() == R.id.beginning)
+            beginning = date;
+        else
+            end = date;
+    }
+
+
     public void addPicture(View v) {
         openImageIntent();
     }
+
 
     static final int SELECT_PICTURE = 1;
     private Uri outputFileUri;
@@ -120,6 +122,7 @@ public class NewTravelActivity extends Activity {
         final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         final PackageManager packageManager = getPackageManager();
         final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+
         for(ResolveInfo res : listCam) {
             final String packageName = res.activityInfo.packageName;
             final Intent intent = new Intent(captureIntent);
@@ -130,13 +133,10 @@ public class NewTravelActivity extends Activity {
         }
 
         // Filesystem.
-        final Intent galleryIntent = new Intent();
-        galleryIntent.setType("image/*");
-        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setType("image/*");
 
-        // Chooser of filesystem options.
-        final Intent chooserIntent = Intent.createChooser(galleryIntent, "Select Source");
-
+        Intent chooserIntent = Intent.createChooser(pickIntent, "Select Image");
         // Add the camera options.
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[cameraIntents.size()]));
 
@@ -160,14 +160,31 @@ public class NewTravelActivity extends Activity {
                 }
 
                 if (isCamera) {
-                    selectedImageUri = outputFileUri;
+                    selectedImageUri =  Uri.parse(getPath(outputFileUri));
                 } else {
-                    selectedImageUri = data == null ? null : data.getData();
+                    selectedImageUri = Uri.parse(getPath(data.getData()));
                 }
             }
         }
+    }
 
-
+    public String getPath(Uri uri) {
+        // just some safety built in
+        if( uri == null ) {
+            // TODO perform some logging or show user feedback
+            return null;
+        }
+        // try to retrieve the image from the media store first
+        // this will only work for images selected from gallery
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        if( cursor != null ){
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+        // this is our fallback here
+        return uri.getPath();
     }
 
 }

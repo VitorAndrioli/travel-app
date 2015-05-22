@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -22,15 +23,17 @@ public class LoginActivity extends Activity {
     public void enter(View view) {
 
         String email = ((EditText) findViewById(R.id.email)).getText().toString();
+        String password = ((EditText) findViewById(R.id.password)).getText().toString();
         List<User> users = User.find(User.class, "email = ?", email);
         User user;
 
-        if (users.size() > 0) {
-            user = users.get(0);
-        } else {
-            user = new User("usuario", email);
-            user.save();
+        if (users.size() == 0 || !password.equals(users.get(0).password)) {
+            ((TextView) findViewById(R.id.login_error)).setVisibility(View.VISIBLE);
+            ((EditText) findViewById(R.id.password)).setText("");
+            return;
         }
+
+        user = users.get(0);
 
         SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();

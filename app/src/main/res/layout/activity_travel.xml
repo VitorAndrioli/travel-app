@@ -7,7 +7,8 @@
 
     <ImageView android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"/>
 
     <TextView android:id="@+id/name"
         android:layout_width="wrap_content"
@@ -28,6 +29,18 @@
     <Button android:id="@+id/add_expense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/add_expense"
         android:onClick="addExpense"/>
+
+    <Button android:id="@+id/view_graph"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/go_to_graph"
+        android:onClick="openGraph"/>
+
+    <LinearLayout android:id="@+id/expenses_list"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"></LinearLayout>
 
 </LinearLayout>
