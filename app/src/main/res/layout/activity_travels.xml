@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     android:orientation="vertical"
     android:animateLayoutChanges="true"
     tools:context="com.traveltrack.vitor.travelapp.TravelsActivity">
@@ -8,37 +9,43 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="50dp">
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/add_travel"
+        android:layout_marginTop="70dp">
 
         <LinearLayout android:id="@+id/travel_list"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:animateLayoutChanges="true"
+            android:paddingTop="15dp"
             android:layout_height="wrap_content"></LinearLayout>
 
     </ScrollView>
 
-    <LinearLayout
+    <fragment android:id="@+id/header"
+        android:name="com.traveltrack.vitor.travelapp.HeaderFragment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+
+        tools:layout="@layout/fragment_header" />
+
+    <LinearLayout android:id="@+id/add_travel"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/dark_blue"
+        android:gravity="center"
+        android:onClick="addTravel">
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
             android:text="@string/add_travel"
-            android:onClick="addTravel"/>
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:drawableLeft="@drawable/add_icon"/>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="logout"
-            android:onClick="logout"/>
     </LinearLayout>
 </RelativeLayout>

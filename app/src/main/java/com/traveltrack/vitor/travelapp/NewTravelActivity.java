@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -30,19 +31,24 @@ import static android.net.Uri.fromFile;
 
 
 public class NewTravelActivity extends Activity {
-    Travel travel;
-    Uri selectedImageUri;
-    Calendar myCalendar;
-    DatePickerDialog.OnDateSetListener date;
-    Date beginning;
-    Date end;
+    private User user;
+    private Travel travel;
+    private Uri selectedImageUri;
+    private Date beginning;
+    private Date end;
 
+    private Calendar myCalendar;
+    private DatePickerDialog.OnDateSetListener date;
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy", Locale.US);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_travel);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);
+        long userId = sharedPreferences.getLong("user_id", 0);
+        user = User.findById(User.class, userId);
 
     }
 
@@ -54,10 +60,6 @@ public class NewTravelActivity extends Activity {
 
         String budgetText = ((EditText) findViewById(R.id.budget)).getText().toString();
         double budget = budgetText.isEmpty() ? 0 : Double.parseDouble(budgetText);
-
-        SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);
-        long userId = sharedPreferences.getLong("user_id", 0);
-        User user = User.findById(User.class, userId);
 
         travel = new Travel(name,
                 selectedImageUri == null ? "android.resource://com.traveltrack.vitor.travelapp/drawable/travel_default" : selectedImageUri.toString(),
@@ -145,6 +147,8 @@ public class NewTravelActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        onSaveInstanceState(new Bundle());
+
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
                 final boolean isCamera;
@@ -158,6 +162,8 @@ public class NewTravelActivity extends Activity {
                         isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                     }
                 }
+
+                Log.d("Debug", "------------------- " + outputFileUri);
 
                 if (isCamera) {
                     selectedImageUri =  Uri.parse(getPath(outputFileUri));

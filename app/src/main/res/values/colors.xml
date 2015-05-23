@@ -1,6 +1,7 @@
 <resources>
     <color name="dark_blue">#002539</color>
     <color name="light_green">#87af99</color>
+    <color name="white">#ffffff</color>
 
     <color name="error">#ff0000</color>
     <color name="error_background">#ff0000</color>

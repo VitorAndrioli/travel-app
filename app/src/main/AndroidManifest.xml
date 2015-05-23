@@ -47,7 +47,8 @@
         </activity>
         <activity
             android:name=".TravelsActivity"
-            android:label="@string/title_activity_travels" >
+            android:label="@string/title_activity_travels"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".TravelActivity"
@@ -55,7 +56,8 @@
         </activity>
         <activity
             android:name=".NewTravelActivity"
-            android:label="@string/title_activity_new_travel" >
+            android:label="@string/title_activity_new_travel"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".NewExpenseActivity"

@@ -11,6 +11,11 @@ import android.widget.TextView;
 
 
 public class RegisterActivity extends Activity {
+    private EditText nameField,
+                     emailField,
+                     passwordField,
+                     passwordConfirmationField;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +23,15 @@ public class RegisterActivity extends Activity {
         setContentView(R.layout.activity_register);
 
         ((LinearLayout) findViewById(R.id.focus_holder)).requestFocus();
+
+        nameField = (EditText) findViewById(R.id.name);
+        emailField = (EditText) findViewById(R.id.email);
+        passwordField = (EditText) findViewById(R.id.password);
+        passwordConfirmationField = (EditText) findViewById(R.id.password_confirmation);
+
     }
 
     public void send(View v) {
-        EditText nameField = (EditText) findViewById(R.id.name),
-                 emailField = (EditText) findViewById(R.id.email),
-                 passwordField = (EditText) findViewById(R.id.password),
-                 passwordConfirmationField = (EditText) findViewById(R.id.password_confirmation);
-
         String name = nameField.getText().toString(),
                email = emailField.getText().toString(),
                password = passwordField.getText().toString(),
@@ -34,29 +40,51 @@ public class RegisterActivity extends Activity {
 
         if (name.isEmpty() || email.isEmpty() || password.isEmpty() || passwordConfirmation.isEmpty()) {
             ((TextView) findViewById(R.id.empty_field_error)).setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.password_error)).setVisibility(View.INVISIBLE);
 
             if (name.isEmpty()) {
-                nameField.setBackgroundResource( R.drawable.light_green_border_error );
+                nameField.setBackgroundResource(R.drawable.light_green_border_error);
+            } else {
+                nameField.setBackgroundResource(R.drawable.light_green_border);
             }
 
             if (email.isEmpty()) {
-                emailField.setBackgroundResource( R.drawable.light_green_border_error );
+                emailField.setBackgroundResource(R.drawable.light_green_border_error);
+            } else {
+                emailField.setBackgroundResource(R.drawable.light_green_border);
             }
 
             if (password.isEmpty()) {
-                passwordField.setBackgroundResource( R.drawable.light_green_border_error );
+                passwordField.setBackgroundResource(R.drawable.light_green_border_error);
             }
 
             if (passwordConfirmation.isEmpty()) {
-                passwordConfirmationField.setBackgroundResource( R.drawable.light_green_border_error );
+                passwordConfirmationField.setBackgroundResource(R.drawable.light_green_border_error);
             }
 
             passwordField.setText("");
             passwordConfirmationField.setText("");
-            return;
-        }
 
-        if ( password.equals( passwordConfirmation ) ) {
+        } else if ( !password.equals( passwordConfirmation ) ) {
+            ((TextView) findViewById(R.id.password_error)).setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.empty_field_error)).setVisibility(View.INVISIBLE);
+            if (name.isEmpty()) {
+                nameField.setBackgroundResource(R.drawable.light_green_border_error);
+            } else {
+                nameField.setBackgroundResource(R.drawable.light_green_border);
+            }
+
+            if (email.isEmpty()) {
+                emailField.setBackgroundResource(R.drawable.light_green_border_error);
+            } else {
+                emailField.setBackgroundResource(R.drawable.light_green_border);
+            }
+
+            passwordField.setBackgroundResource(R.drawable.light_green_border_error);
+            passwordField.setText("");
+            passwordConfirmationField.setBackgroundResource(R.drawable.light_green_border_error);
+            passwordConfirmationField.setText("");
+        } else {
             User user = new User(name, email, password);
             user.save();
 
@@ -68,14 +96,6 @@ public class RegisterActivity extends Activity {
             Intent i = new Intent(this, TravelsActivity.class);
             startActivity(i);
             finish();
-        } else {
-
-            ((TextView) findViewById(R.id.password_error)).setVisibility(View.VISIBLE);
-            passwordField.setBackgroundResource( R.drawable.light_green_border_error );
-            passwordField.setText("");
-            passwordConfirmationField.setBackgroundResource( R.drawable.light_green_border_error );
-            passwordConfirmationField.setText("");
-
         }
 
     }

@@ -7,11 +7,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -34,21 +34,17 @@ public class TravelsActivity extends Activity {
         List<TravelUser> travels = user.getTravels();
 
         View travelsList = findViewById(R.id.travel_list);
-        LinearLayout travel = (LinearLayout)getLayoutInflater().inflate(R.layout.travel, null);
-
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        travel.setLayoutParams(lp);
-
-        View row = null;
-        LayoutInflater inflater = this.getLayoutInflater();
+        RelativeLayout travel = (RelativeLayout)getLayoutInflater().inflate(R.layout.travel, null);
 
         for (int i=0; i< travels.size(); i++) {
+            View row = null;
+            LayoutInflater inflater = this.getLayoutInflater();
+
             row = inflater.inflate(R.layout.travel, null);
 
             TextView name = (TextView) row.findViewById(R.id.name);
             TextView date = (TextView) row.findViewById(R.id.date);
             ImageView picture = (ImageView) row.findViewById(R.id.picture);
-
 
             name.setText(travels.get(i).travel.name);
 
@@ -64,10 +60,8 @@ public class TravelsActivity extends Activity {
             int imageWidth = options.outWidth;
             String imageType = options.outMimeType;
 
-            Log.d("Debug", " ---------------------------- " + imageHeight);
+            picture.setImageBitmap(decodeSampledBitmapFromResource(travels.get(i).travel.imageURI, 300, 90));
 
-            //picture.setImageURI(Uri.parse(travels.get(i).travel.imageURI));
-            picture.setImageBitmap(decodeSampledBitmapFromResource(travels.get(i).travel.imageURI, 50, 70));
 
             ((LinearLayout) travelsList).addView(row);
         }
@@ -113,9 +107,10 @@ public class TravelsActivity extends Activity {
     }
 
     public void openTravel(View view) {
-        LinearLayout travelField = (LinearLayout) ((LinearLayout) view).getChildAt(1);
+        LinearLayout nameContainerParent = (LinearLayout) ((RelativeLayout) view).getChildAt(1);
+        LinearLayout nameContainer = (LinearLayout) nameContainerParent.getChildAt(0);
 
-        String travelName = ((TextView) travelField.getChildAt(0)).getText().toString();
+        String travelName = ((TextView) nameContainer.getChildAt(0)).getText().toString();
 
         Travel travel = Travel.find(Travel.class, "name = ?", travelName).get(0);
         Intent i = new Intent(TravelsActivity.this, TravelActivity.class);
@@ -131,11 +126,13 @@ public class TravelsActivity extends Activity {
     }
 
     public void remove(View view) {
-        LinearLayout travelField = (LinearLayout) ((ImageView) view).getParent();
+        RelativeLayout travelField = (RelativeLayout) ((ImageView) view).getParent().getParent();
         LinearLayout travelList = (LinearLayout) travelField.getParent();
         travelList.removeView( travelField );
 
-        LinearLayout nameContainer = (LinearLayout) travelField.getChildAt(1);
+        LinearLayout nameContainerParent = (LinearLayout) travelField.getChildAt(1);
+        LinearLayout nameContainer = (LinearLayout) nameContainerParent.getChildAt(0);
+
         String travelName = ((TextView) nameContainer.getChildAt(0)).getText().toString();
 
         Travel travel = Travel.find(Travel.class, "name = ?", travelName).get(0);
@@ -153,16 +150,4 @@ public class TravelsActivity extends Activity {
         travel.delete();
 
     }
-
-    public void logout(View v) {
-        SharedPreferences shared_preferences = getSharedPreferences("USER_DATA", 0);
-        SharedPreferences.Editor editor = shared_preferences.edit();
-        editor.remove("user_id");
-        editor.commit();
-
-        Intent i = new Intent(this, LoginActivity.class);
-        startActivity(i);
-        finish();
-    }
-
 }
