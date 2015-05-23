@@ -30,6 +30,37 @@ public class SplashActivity extends Activity {
         long userId = sharedPreferences.getLong("user_id", 0);
         final User user = User.findById(User.class, userId);
 
+        /*final ImageView logo = (ImageView) findViewById(R.id.logo);
+
+        TranslateAnimation animation = new TranslateAnimation(0.0f, 0.0f, -100.0f, 0.0f);
+        animation.setInterpolator();
+        //  new TranslateAnimation(xFrom,xTo, yFrom,yTo)
+        animation.setDuration(1000);  // animation duration
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                logo.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+
+                if (user != null)
+                    i = new Intent(SplashActivity.this, TravelsActivity.class);
+
+                startActivity(i);
+                finish();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        logo.startAnimation(animation);*/
+
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

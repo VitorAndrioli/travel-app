@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -15,15 +16,45 @@ public class RegisterActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        ((LinearLayout) findViewById(R.id.focus_holder)).requestFocus();
     }
 
     public void send(View v) {
-        String name, email, password, passwordConfirmation;
+        EditText nameField = (EditText) findViewById(R.id.name),
+                 emailField = (EditText) findViewById(R.id.email),
+                 passwordField = (EditText) findViewById(R.id.password),
+                 passwordConfirmationField = (EditText) findViewById(R.id.password_confirmation);
 
-        name = ((EditText) findViewById(R.id.name)).getText().toString();
-        email = ((EditText) findViewById(R.id.email)).getText().toString();
-        password = ((EditText) findViewById(R.id.password)).getText().toString();
-        passwordConfirmation = ((EditText) findViewById(R.id.password_confirmation)).getText().toString();
+        String name = nameField.getText().toString(),
+               email = emailField.getText().toString(),
+               password = passwordField.getText().toString(),
+               passwordConfirmation = passwordConfirmationField.getText().toString();
+
+
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || passwordConfirmation.isEmpty()) {
+            ((TextView) findViewById(R.id.empty_field_error)).setVisibility(View.VISIBLE);
+
+            if (name.isEmpty()) {
+                nameField.setBackgroundResource( R.drawable.light_green_border_error );
+            }
+
+            if (email.isEmpty()) {
+                emailField.setBackgroundResource( R.drawable.light_green_border_error );
+            }
+
+            if (password.isEmpty()) {
+                passwordField.setBackgroundResource( R.drawable.light_green_border_error );
+            }
+
+            if (passwordConfirmation.isEmpty()) {
+                passwordConfirmationField.setBackgroundResource( R.drawable.light_green_border_error );
+            }
+
+            passwordField.setText("");
+            passwordConfirmationField.setText("");
+            return;
+        }
 
         if ( password.equals( passwordConfirmation ) ) {
             User user = new User(name, email, password);
@@ -38,13 +69,11 @@ public class RegisterActivity extends Activity {
             startActivity(i);
             finish();
         } else {
-            EditText passwordField = (EditText) findViewById(R.id.password);
-            EditText passwordConfirmationField = (EditText) findViewById(R.id.password_confirmation);
 
             ((TextView) findViewById(R.id.password_error)).setVisibility(View.VISIBLE);
-            passwordField.setBackgroundColor(getResources().getColor( R.color.red ));
+            passwordField.setBackgroundResource( R.drawable.light_green_border_error );
             passwordField.setText("");
-            passwordConfirmationField.setBackgroundColor(getResources().getColor( R.color.red ));
+            passwordConfirmationField.setBackgroundResource( R.drawable.light_green_border_error );
             passwordConfirmationField.setText("");
 
         }
