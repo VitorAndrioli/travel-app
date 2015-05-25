@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -60,8 +61,9 @@ public class TravelsActivity extends Activity {
             int imageWidth = options.outWidth;
             String imageType = options.outMimeType;
 
-            picture.setImageBitmap(decodeSampledBitmapFromResource(travels.get(i).travel.imageURI, 300, 90));
-
+            if (travels.get(i).travel.imageURI != null && !travels.get(i).travel.imageURI.isEmpty()) {
+                picture.setImageBitmap(decodeSampledBitmapFromResource(travels.get(i).travel.imageURI, 300, 90));
+            }
 
             ((LinearLayout) travelsList).addView(row);
         }
@@ -108,7 +110,7 @@ public class TravelsActivity extends Activity {
 
     public void openTravel(View view) {
         LinearLayout nameContainerParent = (LinearLayout) ((RelativeLayout) view).getChildAt(1);
-        LinearLayout nameContainer = (LinearLayout) nameContainerParent.getChildAt(0);
+        LinearLayout nameContainer = (LinearLayout) nameContainerParent.getChildAt(2);
 
         String travelName = ((TextView) nameContainer.getChildAt(0)).getText().toString();
 
@@ -120,7 +122,15 @@ public class TravelsActivity extends Activity {
     }
 
     public void addTravel(View view) {
+        ((ImageButton) view).setBackgroundColor(getResources().getColor(R.color.light_green));
         Intent i = new Intent(TravelsActivity.this, NewTravelActivity.class);
+        startActivity(i);
+
+    }
+
+    public void viewGraph(View view) {
+        ((ImageButton) view).setBackgroundColor(getResources().getColor(R.color.light_green));
+        Intent i = new Intent(this, TravelsGraphActivity.class);
         startActivity(i);
 
     }
@@ -131,7 +141,7 @@ public class TravelsActivity extends Activity {
         travelList.removeView( travelField );
 
         LinearLayout nameContainerParent = (LinearLayout) travelField.getChildAt(1);
-        LinearLayout nameContainer = (LinearLayout) nameContainerParent.getChildAt(0);
+        LinearLayout nameContainer = (LinearLayout) nameContainerParent.getChildAt(2);
 
         String travelName = ((TextView) nameContainer.getChildAt(0)).getText().toString();
 
@@ -149,5 +159,12 @@ public class TravelsActivity extends Activity {
 
         travel.delete();
 
+    }
+
+    @Override
+    public void onStop() {
+        ((ImageButton) findViewById(R.id.add_travel)).setBackgroundColor(getResources().getColor(R.color.dark_blue));
+        ((ImageButton) findViewById(R.id.view_graph)).setBackgroundColor(getResources().getColor(R.color.dark_blue));
+        super.onStop();
     }
 }

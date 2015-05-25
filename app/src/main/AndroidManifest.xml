@@ -31,8 +31,8 @@
         <activity
             android:name=".SplashActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,12 +43,12 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize">
+            android:windowSoftInputMode="stateHidden|adjustResize" >
         </activity>
         <activity
             android:name=".TravelsActivity"
             android:label="@string/title_activity_travels"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".TravelActivity"
@@ -57,7 +57,7 @@
         <activity
             android:name=".NewTravelActivity"
             android:label="@string/title_activity_new_travel"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".NewExpenseActivity"
@@ -67,11 +67,19 @@
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize">
+            android:windowSoftInputMode="stateHidden|adjustResize" >
         </activity>
         <activity
             android:name=".GraphActivity"
             android:label="@string/title_activity_graph" >
+        </activity>
+        <activity
+            android:name=".TravelsGraphActivity"
+            android:label="@string/title_activity_travels_graph" >
+        </activity>
+        <activity
+            android:name=".CategoriesActivity"
+            android:label="@string/title_activity_categories" >
         </activity>
     </application>
 

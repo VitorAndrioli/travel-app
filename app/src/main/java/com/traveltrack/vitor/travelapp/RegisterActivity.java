@@ -43,23 +43,23 @@ public class RegisterActivity extends Activity {
             ((TextView) findViewById(R.id.password_error)).setVisibility(View.INVISIBLE);
 
             if (name.isEmpty()) {
-                nameField.setBackgroundResource(R.drawable.light_green_border_error);
+                nameField.setBackgroundResource(R.drawable.red_border);
             } else {
                 nameField.setBackgroundResource(R.drawable.light_green_border);
             }
 
             if (email.isEmpty()) {
-                emailField.setBackgroundResource(R.drawable.light_green_border_error);
+                emailField.setBackgroundResource(R.drawable.red_border);
             } else {
                 emailField.setBackgroundResource(R.drawable.light_green_border);
             }
 
             if (password.isEmpty()) {
-                passwordField.setBackgroundResource(R.drawable.light_green_border_error);
+                passwordField.setBackgroundResource(R.drawable.red_border);
             }
 
             if (passwordConfirmation.isEmpty()) {
-                passwordConfirmationField.setBackgroundResource(R.drawable.light_green_border_error);
+                passwordConfirmationField.setBackgroundResource(R.drawable.red_border);
             }
 
             passwordField.setText("");
@@ -69,20 +69,20 @@ public class RegisterActivity extends Activity {
             ((TextView) findViewById(R.id.password_error)).setVisibility(View.VISIBLE);
             ((TextView) findViewById(R.id.empty_field_error)).setVisibility(View.INVISIBLE);
             if (name.isEmpty()) {
-                nameField.setBackgroundResource(R.drawable.light_green_border_error);
+                nameField.setBackgroundResource(R.drawable.red_border);
             } else {
                 nameField.setBackgroundResource(R.drawable.light_green_border);
             }
 
             if (email.isEmpty()) {
-                emailField.setBackgroundResource(R.drawable.light_green_border_error);
+                emailField.setBackgroundResource(R.drawable.red_border);
             } else {
                 emailField.setBackgroundResource(R.drawable.light_green_border);
             }
 
-            passwordField.setBackgroundResource(R.drawable.light_green_border_error);
+            passwordField.setBackgroundResource(R.drawable.red_border);
             passwordField.setText("");
-            passwordConfirmationField.setBackgroundResource(R.drawable.light_green_border_error);
+            passwordConfirmationField.setBackgroundResource(R.drawable.red_border);
             passwordConfirmationField.setText("");
         } else {
             User user = new User(name, email, password);

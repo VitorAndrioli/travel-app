@@ -1,29 +1,179 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
     android:orientation="vertical"
-    tools:context="com.traveltrack.vitor.travelapp.NewTravelActivity">
+    android:animateLayoutChanges="true"
+    tools:context="com.traveltrack.vitor.travelapp.TravelsActivity">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="70dp"
+        android:layout_above="@+id/footer"
+        android:isScrollContainer="true">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="20dp"
+            android:orientation="vertical">
+
+            <ImageView android:id="@+id/picture"
+                android:layout_width="fill_parent"
+                android:layout_height="100dp"
+                android:background="@color/light_green"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"/>
+
+            <LinearLayout android:id="@+id/focus_holder" android:orientation="vertical"
+                android:focusable="true" android:focusableInTouchMode="true"
+                android:layout_width="0px" android:layout_height="0px"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <EditText android:id="@+id/value"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/value"
+                    android:background="@drawable/light_green_border"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/dark_blue"
+                    android:paddingBottom="7dp"
+                    android:paddingTop="7dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:inputType="numberDecimal"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_height="0dp"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/light_green_background"
+                    android:onClick="getDate"
+                    android:layout_height="45dp"
+                    android:paddingBottom="7dp"
+                    android:paddingTop="7dp"
+                    android:paddingLeft="7dp"
+                    >
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:layout_height="fill_parent"
+                        android:src="@drawable/calendar_icon"/>
+
+                    <TextView android:id="@+id/date"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:layout_gravity="center"
+                        android:paddingLeft="7dp"
+                        android:textColor="@color/dark_blue" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <EditText android:id="@+id/description"
+                android:layout_width="fill_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_height="80dp"
+                android:padding="7dp"
+                android:hint="@string/description"
+                android:textColorHint="@color/gray"
+                android:textColor="@color/dark_blue"
+                android:gravity="top"
+                android:background="@drawable/light_green_border"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/light_green_background"
+                android:textColor="@color/dark_blue"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:stateListAnimator="@null"
+                android:layout_marginTop="15dp"
+                android:text="@string/create"
+                android:onClick="create"/>
 
 
-    <EditText android:id="@+id/value"
+
+        </LinearLayout>
+    </ScrollView>
+
+    <fragment android:id="@+id/header"
+        android:name="com.traveltrack.vitor.travelapp.HeaderFragment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:hint="Valor" />
+        tools:layout="@layout/fragment_header" />
 
-    <EditText android:id="@+id/description"
+    <LinearLayout android:id="@+id/footer"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="Descrição" />]
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="criar"
-        android:onClick="create" />
+        <ImageButton android:id="@+id/back"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:src="@drawable/back_icon"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:scaleType="centerInside"
+            android:background="@color/dark_blue"
+            android:onClick="goBack"/>
 
+        <RelativeLayout
+            android:layout_width="2dp"
+            android:layout_height="fill_parent"
+            android:background="@color/white"/>
 
-</LinearLayout>
+        <ImageButton android:id="@+id/view_graph"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:src="@drawable/pie_graph_icon"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:scaleType="centerInside"
+            android:background="@color/dark_blue"
+            android:onClick="viewGraph"/>
+
+        <RelativeLayout
+            android:layout_width="2dp"
+            android:layout_height="fill_parent"
+            android:background="@color/white"/>
+
+        <ImageButton android:id="@+id/add_expense"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:src="@drawable/add_expense"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:scaleType="centerInside"
+            android:background="@color/light_green"
+            android:onClick="addExpense"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

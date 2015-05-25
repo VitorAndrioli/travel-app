@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,15 +42,16 @@ public class TravelActivity extends Activity {
         ((TextView) findViewById(R.id.name)).setText(currentTravel.name);
 
         if (travel_user.budget > 0)
-            ((TextView) findViewById(R.id.budget)).setText(String.valueOf(travel_user.budget));
+            ((TextView) findViewById(R.id.budget)).setText(String.valueOf(currentTravel.getTotalExpenses()) + " / " + String.valueOf( travel_user.budget));
+        else
+            ((TextView) findViewById(R.id.budget)).setText(String.valueOf(currentTravel.getTotalExpenses()));
 
-        if (currentTravel.beginning != null)
-            ((TextView) findViewById(R.id.beginning)).setText(sdf.format(currentTravel.beginning));
+        if (currentTravel.beginning != null && currentTravel.end != null)
+            ((TextView) findViewById(R.id.date)).setText(sdf.format(currentTravel.beginning) + " - " + sdf.format(currentTravel.end));
 
-        if (currentTravel.end != null)
-            ((TextView) findViewById(R.id.end)).setText(sdf.format(currentTravel.end));
+
         if (currentTravel.imageURI != null)
-            ((ImageView) findViewById(R.id.image)).setImageURI(parse(currentTravel.imageURI));
+            ((ImageView) findViewById(R.id.picture)).setImageURI(parse(currentTravel.imageURI));
 
 
         List<Expense> expenses = currentTravel.getExpenses();
@@ -61,10 +62,11 @@ public class TravelActivity extends Activity {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         expenseField.setLayoutParams(lp);
 
-        View row = null;
-        LayoutInflater inflater = this.getLayoutInflater();
 
         for (int i=0; i< expenses.size(); i++) {
+            View row = null;
+            LayoutInflater inflater = this.getLayoutInflater();
+
             Expense expense = expenses.get(i);
             row = inflater.inflate(R.layout.expense, null);
 
@@ -72,28 +74,47 @@ public class TravelActivity extends Activity {
             TextView description = (TextView) row.findViewById(R.id.description);
             ImageView category = (ImageView) row.findViewById(R.id.category);
 
-            Log.d("Debug", "--------------------- " + expense.value);
-
             value.setText(String.valueOf( expense.value ));
             description.setText(String.valueOf(expense.description));
             category.setImageURI(Uri.parse(expense.category.uri));
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 90);
+            params.setMargins(0, 5, 0, 5);
+            row.setLayoutParams(params);
 
             ((LinearLayout) expensesList).addView(row);
         }
     }
 
+    public void goBack(View view) {
+        ((ImageButton) view).setBackgroundColor(getResources().getColor(R.color.light_green));
+
+        Intent intent = new Intent(this, TravelsActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     public void addExpense(View view) {
-        Intent i = new Intent(TravelActivity.this, NewExpenseActivity.class);
+        ((ImageButton) view).setBackgroundColor(getResources().getColor(R.color.light_green));
+        Intent i = new Intent(this, CategoriesActivity.class);
         i.putExtra("travel_id", currentTravel.getId().toString());
         startActivity(i);
     }
 
-    public void openGraph(View view) {
+    public void viewGraph(View view) {
+        ((ImageButton) view).setBackgroundColor(getResources().getColor(R.color.light_green));
         Intent intent = new Intent(this, GraphActivity.class);
         intent.putExtra( "travel_id", currentTravel.getId().toString() );
         startActivity(intent);
+    }
 
+    @Override
+    public void onStop() {
+        ((ImageButton) findViewById(R.id.back)).setBackgroundColor(getResources().getColor(R.color.dark_blue));
+        ((ImageButton) findViewById(R.id.view_graph)).setBackgroundColor(getResources().getColor(R.color.dark_blue));
+        ((ImageButton) findViewById(R.id.add_expense)).setBackgroundColor(getResources().getColor(R.color.dark_blue));
 
+        super.onStop();
     }
 
 }

@@ -16,11 +16,10 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash);
 
         if (Category.count(Category.class) == 0) {
-            String[] categories = {"passagem", "hospedagem", "transporte", "alimentação", "lazer"};
-            String[] categoryURIs = {"passage", "accommodation", "transportation", "alimentation", "leisure"};
+            String[] categories = {"passage", "accommodation", "transportation", "alimentation", "leisure", "other"};
 
             for (int i=0; i< categories.length; i++) {
-                String uri = "android.resource://com.traveltrack.vitor.travelapp/drawable/" + categoryURIs[i];
+                String uri = "android.resource://com.traveltrack.vitor.travelapp/drawable/" + categories[i];
                 Category category = new Category(categories[i], uri);
                 category.save();
             }

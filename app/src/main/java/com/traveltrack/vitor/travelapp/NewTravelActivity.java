@@ -3,6 +3,7 @@ package com.traveltrack.vitor.travelapp;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -13,10 +14,13 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.File;
@@ -53,7 +57,7 @@ public class NewTravelActivity extends Activity {
     }
 
     public void create(View view) {
-        String name = ((EditText) findViewById(R.id.name)).getText().toString();
+        String name = ((EditText) findViewById(R.id.travel_name)).getText().toString();
         if (name.isEmpty()) {
             return;
         }
@@ -62,7 +66,7 @@ public class NewTravelActivity extends Activity {
         double budget = budgetText.isEmpty() ? 0 : Double.parseDouble(budgetText);
 
         travel = new Travel(name,
-                selectedImageUri == null ? "android.resource://com.traveltrack.vitor.travelapp/drawable/travel_default" : selectedImageUri.toString(),
+                selectedImageUri == null ? null : selectedImageUri.toString(),
                 beginning,
                 end);
 
@@ -77,6 +81,12 @@ public class NewTravelActivity extends Activity {
     }
 
     public void getDate(final View view) {
+        EditText myEditText = (EditText) findViewById(R.id.name);
+        InputMethodManager imm = (InputMethodManager)getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
+
+
         myCalendar = Calendar.getInstance();
         date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -95,9 +105,11 @@ public class NewTravelActivity extends Activity {
 
     private void updateLabel(View view) {
         Date date = myCalendar.getTime();
-        ((TextView) view).setText( sdf.format(date) );
+        TextView dateView = (TextView) ((LinearLayout) view).getChildAt(1);
 
-        if (view.getId() == R.id.beginning)
+        dateView.setText(sdf.format(date));
+
+        if (dateView.getId() == R.id.beginning)
             beginning = date;
         else
             end = date;
@@ -163,8 +175,6 @@ public class NewTravelActivity extends Activity {
                     }
                 }
 
-                Log.d("Debug", "------------------- " + outputFileUri);
-
                 if (isCamera) {
                     selectedImageUri =  Uri.parse(getPath(outputFileUri));
                 } else {
@@ -172,6 +182,11 @@ public class NewTravelActivity extends Activity {
                 }
             }
         }
+
+        if (selectedImageUri != null) {
+            ((ImageView) findViewById(R.id.picture)).setImageURI(selectedImageUri);
+        }
+
     }
 
     public String getPath(Uri uri) {
@@ -191,6 +206,13 @@ public class NewTravelActivity extends Activity {
         }
         // this is our fallback here
         return uri.getPath();
+    }
+
+    public void goBack(View view) {
+        ((ImageButton) view).setBackgroundColor(getResources().getColor(R.color.light_green));
+        Intent intent = new Intent(this, TravelsActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }

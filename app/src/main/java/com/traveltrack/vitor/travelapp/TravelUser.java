@@ -16,4 +16,5 @@ public class TravelUser extends SugarRecord<TravelUser> {
         this.user = user;
         this.budget = budget;
     }
+
 }

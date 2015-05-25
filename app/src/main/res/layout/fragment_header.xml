@@ -51,7 +51,7 @@
                         android:layout_weight="0.4"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/add_icon"/>
+                        android:src="@drawable/default_profile_picture"/>
 
                     <TextView
                         android:layout_width="0dp"
@@ -104,15 +104,17 @@
                 android:background="@color/dark_blue"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <ImageView
                     android:layout_width="0dp"
                     android:layout_weight="0.4"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/default_profile_picture"/>
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="0.7"
+                    android:layout_marginLeft="5dp"
                     android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
                     android:text="nome"

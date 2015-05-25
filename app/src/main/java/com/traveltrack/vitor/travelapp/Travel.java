@@ -34,6 +34,18 @@ public class Travel extends SugarRecord<Travel> {
         return expenses;
     }
 
+    public float getTotalExpenses() {
+        float total = 0;
+
+        List<Expense> expenses = this.getExpenses();
+
+        for(int i=0; i<expenses.size(); i++) {
+            total += expenses.get(i).value;
+        }
+
+        return total;
+    }
+
     public List<TravelUser> getParticipants() {
         List<TravelUser> users = TravelUser.find(TravelUser.class, "travel = ?", this.getId().toString());
 

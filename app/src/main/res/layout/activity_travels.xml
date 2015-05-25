@@ -10,7 +10,7 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/add_travel"
+        android:layout_above="@+id/footer"
         android:layout_marginTop="70dp">
 
         <LinearLayout android:id="@+id/travel_list"
@@ -26,26 +26,40 @@
         android:name="com.traveltrack.vitor.travelapp.HeaderFragment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-
         tools:layout="@layout/fragment_header" />
 
-    <LinearLayout android:id="@+id/add_travel"
+    <LinearLayout android:id="@+id/footer"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:background="@color/dark_blue"
-        android:gravity="center"
-        android:onClick="addTravel">
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <ImageButton android:id="@+id/view_graph"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="fill_parent"
-            android:text="@string/add_travel"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:drawableLeft="@drawable/add_icon"/>
+            android:src="@drawable/bar_graph_icon"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:scaleType="centerInside"
+            android:background="@color/dark_blue"
+            android:onClick="viewGraph"/>
+
+        <RelativeLayout
+            android:layout_width="2dp"
+            android:layout_height="fill_parent"
+            android:background="@color/white"/>
+
+        <ImageButton android:id="@+id/add_travel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:src="@drawable/add_travel"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:scaleType="centerInside"
+            android:background="@color/dark_blue"
+            android:onClick="addTravel"/>
 
     </LinearLayout>
 </RelativeLayout>
