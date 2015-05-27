@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 
 public class RegisterActivity extends Activity {
-    private EditText nameField,
-                     emailField,
-                     passwordField,
-                     passwordConfirmationField;
+    private EditText nameField;
+    private EditText emailField;
+    private EditText passwordField;
+    private EditText passwordConfirmationField;
 
 
     @Override
@@ -32,10 +32,10 @@ public class RegisterActivity extends Activity {
     }
 
     public void send(View v) {
-        String name = nameField.getText().toString(),
-               email = emailField.getText().toString(),
-               password = passwordField.getText().toString(),
-               passwordConfirmation = passwordConfirmationField.getText().toString();
+        String name = nameField.getText().toString();
+        String email = emailField.getText().toString();
+        String password = passwordField.getText().toString();
+        String passwordConfirmation = passwordConfirmationField.getText().toString();
 
 
         if (name.isEmpty() || email.isEmpty() || password.isEmpty() || passwordConfirmation.isEmpty()) {
@@ -90,11 +90,11 @@ public class RegisterActivity extends Activity {
 
             SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putLong("user_id", user.getId());
+            editor.putLong("userId", user.getId());
             editor.commit();
 
-            Intent i = new Intent(this, TravelsActivity.class);
-            startActivity(i);
+            Intent intent = new Intent(this, TravelsActivity.class);
+            startActivity(intent);
             finish();
         }
 
@@ -105,6 +105,5 @@ public class RegisterActivity extends Activity {
         startActivity(i);
         finish();
     }
-
 
 }

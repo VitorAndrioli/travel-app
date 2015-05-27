@@ -14,8 +14,9 @@ public class HeaderFragment extends Fragment {
 public HeaderFragment() {
         // Required empty public constructor
     }
-    private LinearLayout userName, userNameActive, userMenu;
-    private TextView profile, logout;
+    private LinearLayout userNameContainer, userNameContainerActive, userMenu;
+    private TextView userName, profile, logout;
+    private User user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,24 +29,31 @@ public HeaderFragment() {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_header, container, false);
 
-        userName = (LinearLayout) view.findViewById(R.id.user_name);
-        userNameActive = (LinearLayout) view.findViewById(R.id.user_name_active);
+        SharedPreferences shared_preferences = getActivity().getSharedPreferences("USER_DATA", 0);
+        long userId = shared_preferences.getLong("userId", 0);
+        user = User.findById(User.class, userId);
+
+        userName = (TextView) view.findViewById(R.id.user_name);
+        userNameContainer = (LinearLayout) view.findViewById(R.id.user_name_container);
+        userNameContainerActive = (LinearLayout) view.findViewById(R.id.user_name_container_active);
         userMenu = (LinearLayout) view.findViewById(R.id.user_menu);
         profile = (TextView) view.findViewById(R.id.profile);
         logout = (TextView) view.findViewById(R.id.logout);
 
-        userName.setOnClickListener(new View.OnClickListener() {
+
+        userName.setText(user.getName());
+        userNameContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userName.setVisibility(View.GONE);
+                userNameContainer.setVisibility(View.GONE);
                 userMenu.setVisibility(View.VISIBLE);
             }
         });
 
-        userNameActive.setOnClickListener(new View.OnClickListener() {
+        userNameContainerActive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userName.setVisibility(View.VISIBLE);
+                userNameContainer.setVisibility(View.VISIBLE);
                 userMenu.setVisibility(View.GONE);
             }
         });
@@ -79,7 +87,7 @@ public HeaderFragment() {
 
     @Override
     public void onPause() {
-        userName.setVisibility(View.VISIBLE);
+        userNameContainer.setVisibility(View.VISIBLE);
         userMenu.setVisibility(View.GONE);
         super.onPause();
     }

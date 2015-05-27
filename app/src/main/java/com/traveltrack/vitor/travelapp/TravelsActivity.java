@@ -21,7 +21,7 @@ import java.util.Locale;
 
 
 public class TravelsActivity extends Activity {
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy", Locale.US);
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy", Locale.US);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,43 +29,44 @@ public class TravelsActivity extends Activity {
         setContentView(R.layout.activity_travels);
 
         SharedPreferences shared_preferences = getSharedPreferences("USER_DATA", 0);
-        long userId = shared_preferences.getLong("user_id", 0);
+        long userId = shared_preferences.getLong("userId", 0);
         User user = User.findById(User.class, userId);
 
         List<TravelUser> travels = user.getTravels();
 
-        View travelsList = findViewById(R.id.travel_list);
-        RelativeLayout travel = (RelativeLayout)getLayoutInflater().inflate(R.layout.travel, null);
+        LinearLayout travelsList = (LinearLayout) findViewById(R.id.travel_list);
+
+        View row;
+        LayoutInflater inflater = this.getLayoutInflater();
 
         for (int i=0; i< travels.size(); i++) {
-            View row = null;
-            LayoutInflater inflater = this.getLayoutInflater();
 
             row = inflater.inflate(R.layout.travel, null);
 
             TextView name = (TextView) row.findViewById(R.id.name);
             TextView date = (TextView) row.findViewById(R.id.date);
             ImageView picture = (ImageView) row.findViewById(R.id.picture);
+            Travel travel = travels.get(i).getTravel();
 
-            name.setText(travels.get(i).travel.name);
+            name.setText(travel.getName());
 
-            if (travels.get(i).travel.beginning != null && travels.get(i).travel.end != null)
-                date.setText(sdf.format( travels.get(i).travel.beginning ) + " - " + sdf.format( travels.get(i).travel.end ));
+            if (travel.getStart() != null && travel.getEnd() != null)
+                date.setText(sdf.format( travel.getStart() ) + " - " + sdf.format( travel.getEnd() ));
 
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
             options.inSampleSize = 1;
-            BitmapFactory.decodeFile(travels.get(i).travel.imageURI, options);
+            BitmapFactory.decodeFile(travel.getImageURI(), options);
             int imageHeight = options.outHeight;
             int imageWidth = options.outWidth;
             String imageType = options.outMimeType;
 
-            if (travels.get(i).travel.imageURI != null && !travels.get(i).travel.imageURI.isEmpty()) {
-                picture.setImageBitmap(decodeSampledBitmapFromResource(travels.get(i).travel.imageURI, 300, 90));
+            if (travel.getImageURI() != null) {
+                picture.setImageBitmap(decodeSampledBitmapFromResource(travel.getImageURI(), 300, 90));
             }
 
-            ((LinearLayout) travelsList).addView(row);
+            travelsList.addView(row);
         }
 
     }
@@ -115,23 +116,23 @@ public class TravelsActivity extends Activity {
         String travelName = ((TextView) nameContainer.getChildAt(0)).getText().toString();
 
         Travel travel = Travel.find(Travel.class, "name = ?", travelName).get(0);
-        Intent i = new Intent(TravelsActivity.this, TravelActivity.class);
-        i.putExtra("travel_id", travel.getId().toString());
-        startActivity(i);
+        Intent intent = new Intent(this, TravelActivity.class);
+        intent.putExtra("travelId", travel.getId().toString());
+        startActivity(intent);
 
     }
 
     public void addTravel(View view) {
-        ((ImageButton) view).setBackgroundColor(getResources().getColor(R.color.light_green));
-        Intent i = new Intent(TravelsActivity.this, NewTravelActivity.class);
-        startActivity(i);
+        view.setBackgroundColor(getResources().getColor(R.color.light_green));
+        Intent intent = new Intent(this, NewTravelActivity.class);
+        startActivity(intent);
 
     }
 
     public void viewGraph(View view) {
-        ((ImageButton) view).setBackgroundColor(getResources().getColor(R.color.light_green));
-        Intent i = new Intent(this, TravelsGraphActivity.class);
-        startActivity(i);
+        view.setBackgroundColor(getResources().getColor(R.color.light_green));
+        Intent intent = new Intent(this, TravelsGraphActivity.class);
+        startActivity(intent);
 
     }
 
@@ -153,10 +154,14 @@ public class TravelsActivity extends Activity {
             TravelUser travelUser = TravelUser.find(TravelUser.class,
                     "travel = ? and user = ?",
                     travel.getId().toString(),
-                    users.get(i).user.getId().toString()).get(0);
+                    users.get(i).getUser().getId().toString()).get(0);
             travelUser.delete();
         }
 
+        List<Expense> expenses = travel.getExpenses();
+        for (int i=0; i<expenses.size(); i++) {
+            expenses.get(i).delete();
+        }
         travel.delete();
 
     }

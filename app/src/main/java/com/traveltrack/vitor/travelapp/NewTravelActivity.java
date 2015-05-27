@@ -51,7 +51,7 @@ public class NewTravelActivity extends Activity {
         setContentView(R.layout.activity_new_travel);
 
         SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);
-        long userId = sharedPreferences.getLong("user_id", 0);
+        long userId = sharedPreferences.getLong("userId", 0);
         user = User.findById(User.class, userId);
 
     }
@@ -81,11 +81,9 @@ public class NewTravelActivity extends Activity {
     }
 
     public void getDate(final View view) {
-        EditText myEditText = (EditText) findViewById(R.id.name);
-        InputMethodManager imm = (InputMethodManager)getSystemService(
-                Context.INPUT_METHOD_SERVICE);
+        EditText myEditText = (EditText) findViewById(R.id.travel_name);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
-
 
         myCalendar = Calendar.getInstance();
         date = new DatePickerDialog.OnDateSetListener() {

@@ -13,6 +13,9 @@ import java.util.List;
 
 
 public class LoginActivity extends Activity {
+    private TextView emailField;
+    private TextView passwordField;
+    private TextView loginError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,35 +24,38 @@ public class LoginActivity extends Activity {
 
         ((LinearLayout) findViewById(R.id.focus_holder)).requestFocus();
 
+        emailField = (EditText) findViewById(R.id.email);
+        passwordField = (EditText) findViewById(R.id.password);
+        loginError = (TextView) findViewById(R.id.login_error);
+
     }
 
     public void enter(View view) {
 
-        String email = ((EditText) findViewById(R.id.email)).getText().toString();
-        String password = ((EditText) findViewById(R.id.password)).getText().toString();
+        String email = emailField.getText().toString();
+        String password = passwordField.getText().toString();
         List<User> users = User.find(User.class, "email = ?", email);
-        User user;
 
-        if (users.size() == 0 || !password.equals(users.get(0).password)) {
-            ((TextView) findViewById(R.id.login_error)).setVisibility(View.VISIBLE);
-            ((EditText) findViewById(R.id.password)).setText("");
-            return;
+        if (users.size() == 0 || !password.equals(users.get(0).getPassword())) {
+            loginError.setVisibility(View.VISIBLE);
+            passwordField.setText("");
+        } else {
+
+            User user = users.get(0);
+
+            SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putLong("userId", user.getId());
+            editor.commit();
+
+            Intent intent = new Intent(this, TravelsActivity.class);
+            startActivity(intent);
+            finish();
         }
-
-        user = users.get(0);
-
-        SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putLong("user_id", user.getId());
-        editor.commit();
-
-        Intent i = new Intent(this, TravelsActivity.class);
-        startActivity(i);
-        finish();
     }
 
     public void register(View v) {
-        Intent i = new Intent(this, RegisterActivity.class);
-        startActivity(i);
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
     }
 }

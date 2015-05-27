@@ -62,7 +62,7 @@ public class NewExpenseActivity extends ActionBarActivity {
         expense.save();
 
         Intent intent = new Intent(this, TravelActivity.class);
-        intent.putExtra("travel_id", currentTravel.getId().toString());
+        intent.putExtra("travelId", currentTravel.getId().toString());
         startActivity(intent);
 
     }
@@ -93,4 +93,11 @@ public class NewExpenseActivity extends ActionBarActivity {
                 myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
+    public void goBack(View view) {
+        view.setBackgroundColor(getResources().getColor(R.color.light_green));
+        Intent intent = new Intent(this, CategoriesActivity.class);
+        intent.putExtra("travelId", currentTravel.getId().toString());
+        startActivity(intent);
+        finish();
+    }
 }

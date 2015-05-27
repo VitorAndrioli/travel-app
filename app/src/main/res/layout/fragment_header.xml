@@ -39,7 +39,7 @@
                 android:visibility="gone"
                 android:layout_alignParentRight="true">
 
-                <LinearLayout android:id="@+id/user_name_active"
+                <LinearLayout android:id="@+id/user_name_container_active"
                     android:layout_width="fill_parent"
                     android:layout_height="70dp"
                     android:orientation="horizontal"
@@ -94,7 +94,7 @@
 
             </LinearLayout>
 
-            <LinearLayout android:id="@+id/user_name"
+            <LinearLayout android:id="@+id/user_name_container"
                 android:layout_width="0dp"
                 android:layout_weight="0.4"
                 android:layout_height="70dp"
@@ -111,13 +111,12 @@
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/default_profile_picture"/>
 
-                <TextView
+                <TextView android:id="@+id/user_name"
                     android:layout_width="0dp"
                     android:layout_weight="0.7"
                     android:layout_marginLeft="5dp"
                     android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
-                    android:text="nome"
                     android:textColor="@color/white"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"/>

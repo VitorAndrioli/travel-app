@@ -29,10 +29,10 @@ public class GraphActivity extends Activity {
         setContentView(R.layout.activity_graph);
 
         Intent intent = getIntent();
-        int travelId = Integer.parseInt(intent.getStringExtra("travel_id"));
+        int travelId = Integer.parseInt(intent.getStringExtra("travelId"));
 
         SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);
-        long userId = sharedPreferences.getLong("user_id", 0);
+        long userId = sharedPreferences.getLong("userId", 0);
         user = User.findById(User.class, userId);
         travel = Travel.findById(Travel.class, travelId);
 
@@ -81,7 +81,7 @@ public class GraphActivity extends Activity {
             Category category = (Category) categories.get(i);
             float total = user.getExpensesByCategory(category, travel);
             if (total > 0) {
-                xVals.add(category.name);
+                xVals.add(category.getName());
                 yVals1.add( new Entry( total, i ) );
             }
         }
@@ -90,7 +90,8 @@ public class GraphActivity extends Activity {
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
 
-        dataSet.setColors(new int[] {R.color.red, R.color.blue, R.color.red, R.color.blue, R.color.red}, this);
+        dataSet.setColors(new int[] {R.color.pie_chart_1, R.color.pie_chart_2, R.color.pie_chart_3,
+                R.color.pie_chart_4, R.color.pie_chart_5, R.color.pie_chart_6}, this);
 
         PieData data = new PieData(xVals, dataSet);
         data.setValueFormatter(new PercentFormatter());

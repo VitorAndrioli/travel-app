@@ -7,7 +7,7 @@ import android.view.View;
 
 
 public class CategoriesActivity extends Activity {
-    int travelId;
+    private int travelId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,11 +15,12 @@ public class CategoriesActivity extends Activity {
         setContentView(R.layout.activity_categories);
 
         Intent intent = getIntent();
-        travelId = Integer.parseInt(intent.getStringExtra("travel_id"));
+        travelId = Integer.parseInt(intent.getStringExtra("travelId"));
 
     }
 
     public void addExpense(View view) {
+        view.setBackgroundColor(getResources().getColor(R.color.light_green));
         String categoryName = view.getTag().toString();
 
         Intent intent = new Intent(this, NewExpenseActivity.class);
@@ -28,5 +29,12 @@ public class CategoriesActivity extends Activity {
         startActivity(intent);
     }
 
+    public void goBack(View view) {
+        view.setBackgroundColor(getResources().getColor(R.color.light_green));
+        Intent intent = new Intent(this, TravelActivity.class);
+        intent.putExtra("travelId", String.valueOf(travelId));
+        startActivity(intent);
+        finish();
+    }
 
 }
