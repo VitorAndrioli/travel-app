@@ -70,6 +70,25 @@ public class Travel extends SugarRecord<Travel> {
         return category_total;
     }
 
+    @Override
+    public void delete() {
+        List<TravelUser> users = this.getParticipants();
+
+        for (int i=0; i<users.size(); i++) {
+            TravelUser travelUser = TravelUser.find(TravelUser.class,
+                    "travel = ? and user = ?",
+                    this.getId().toString(),
+                    users.get(i).getUser().getId().toString()).get(0);
+            travelUser.delete();
+        }
+
+        List<Expense> expenses = this.getExpenses();
+        for (int i=0; i<expenses.size(); i++) {
+            expenses.get(i).delete();
+        }
+
+        super.delete();
+    }
 
     public void setName(String name) {
         this.name = name;

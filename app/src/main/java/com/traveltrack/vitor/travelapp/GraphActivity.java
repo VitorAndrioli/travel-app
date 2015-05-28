@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -104,6 +105,23 @@ public class GraphActivity extends Activity {
 
         mChart.invalidate();
     }
+
+    public void goBack(View view) {
+        view.setBackgroundColor(getResources().getColor(R.color.light_green));
+        Intent intent = new Intent(this, TravelActivity.class);
+        intent.putExtra("travelId", travel.getId().toString());
+        startActivity(intent);
+        finish();
+    }
+
+    public void addExpense(View view) {
+        view.setBackgroundColor(getResources().getColor(R.color.light_green));
+        Intent intent = new Intent(this, CategoriesActivity.class);
+        intent.putExtra("travelId", travel.getId().toString());
+        startActivity(intent);
+        finish();
+    }
+
 
 
 }

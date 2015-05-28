@@ -41,12 +41,13 @@ public class TravelsActivity extends Activity {
 
         for (int i=0; i< travels.size(); i++) {
 
+            Travel travel = travels.get(i).getTravel();
             row = inflater.inflate(R.layout.travel, null);
+            row.setTag(travel.getId());
 
             TextView name = (TextView) row.findViewById(R.id.name);
             TextView date = (TextView) row.findViewById(R.id.date);
             ImageView picture = (ImageView) row.findViewById(R.id.picture);
-            Travel travel = travels.get(i).getTravel();
 
             name.setText(travel.getName());
 
@@ -138,30 +139,11 @@ public class TravelsActivity extends Activity {
 
     public void remove(View view) {
         RelativeLayout travelField = (RelativeLayout) ((ImageView) view).getParent().getParent();
-        LinearLayout travelList = (LinearLayout) travelField.getParent();
+        LinearLayout travelList = (LinearLayout) findViewById(R.id.travel_list);
         travelList.removeView( travelField );
 
-        LinearLayout nameContainerParent = (LinearLayout) travelField.getChildAt(1);
-        LinearLayout nameContainer = (LinearLayout) nameContainerParent.getChildAt(2);
-
-        String travelName = ((TextView) nameContainer.getChildAt(0)).getText().toString();
-
-        Travel travel = Travel.find(Travel.class, "name = ?", travelName).get(0);
-
-        List<TravelUser> users = travel.getParticipants();
-
-        for (int i=0; i<users.size(); i++) {
-            TravelUser travelUser = TravelUser.find(TravelUser.class,
-                    "travel = ? and user = ?",
-                    travel.getId().toString(),
-                    users.get(i).getUser().getId().toString()).get(0);
-            travelUser.delete();
-        }
-
-        List<Expense> expenses = travel.getExpenses();
-        for (int i=0; i<expenses.size(); i++) {
-            expenses.get(i).delete();
-        }
+        long travelId = Long.valueOf(travelField.getTag().toString() );
+        Travel travel = Travel.findById(Travel.class, travelId);
         travel.delete();
 
     }

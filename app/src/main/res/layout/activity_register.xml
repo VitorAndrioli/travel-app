@@ -14,8 +14,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingBottom="20dp"
             android:orientation="vertical">
 
@@ -37,10 +37,10 @@
                 android:textColorHint="@color/gray"
                 android:textColor="@color/dark_blue"
                 android:background="@drawable/light_green_border"
-                android:paddingBottom="7dp"
-                android:paddingTop="7dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingBottom="@dimen/input_text_vertical_padding"
+                android:paddingTop="@dimen/input_text_vertical_padding"
+                android:paddingLeft="@dimen/input_text_horizontal_padding"
+                android:paddingRight="@dimen/input_text_horizontal_padding"
                 android:layout_marginTop="10dp"
                 android:inputType="textPersonName"/>
 
@@ -51,10 +51,10 @@
                 android:textColorHint="@color/gray"
                 android:textColor="@color/dark_blue"
                 android:background="@drawable/light_green_border"
-                android:paddingBottom="7dp"
-                android:paddingTop="7dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingBottom="@dimen/input_text_vertical_padding"
+                android:paddingTop="@dimen/input_text_vertical_padding"
+                android:paddingLeft="@dimen/input_text_horizontal_padding"
+                android:paddingRight="@dimen/input_text_horizontal_padding"
                 android:layout_marginTop="10dp"
                 android:inputType="textEmailAddress"/>
 
@@ -65,10 +65,10 @@
                 android:textColorHint="@color/gray"
                 android:textColor="@color/dark_blue"
                 android:background="@drawable/light_green_border"
-                android:paddingBottom="7dp"
-                android:paddingTop="7dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingBottom="@dimen/input_text_vertical_padding"
+                android:paddingTop="@dimen/input_text_vertical_padding"
+                android:paddingLeft="@dimen/input_text_horizontal_padding"
+                android:paddingRight="@dimen/input_text_horizontal_padding"
                 android:layout_marginTop="10dp"
                 android:inputType="textPassword"/>
 
@@ -79,10 +79,10 @@
                 android:textColorHint="@color/gray"
                 android:textColor="@color/dark_blue"
                 android:background="@drawable/light_green_border"
-                android:paddingBottom="7dp"
-                android:paddingTop="7dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingBottom="@dimen/input_text_vertical_padding"
+                android:paddingTop="@dimen/input_text_vertical_padding"
+                android:paddingLeft="@dimen/input_text_horizontal_padding"
+                android:paddingRight="@dimen/input_text_horizontal_padding"
                 android:layout_marginTop="10dp"
                 android:inputType="textPassword"/>
 

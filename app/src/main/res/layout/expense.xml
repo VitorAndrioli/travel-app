@@ -65,7 +65,7 @@
         android:padding="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:onClick="remove"
+        android:onClick="removeExpense"
         android:layout_height="fill_parent" />
 
 

@@ -69,6 +69,7 @@ public class TravelActivity extends Activity {
 
             Expense expense = expenses.get(i);
             row = inflater.inflate(R.layout.expense, null);
+            row.setTag(expense.getId());
 
             TextView value = (TextView) row.findViewById(R.id.value);
             TextView description = (TextView) row.findViewById(R.id.description);
@@ -117,4 +118,15 @@ public class TravelActivity extends Activity {
         super.onStop();
     }
 
+    public void removeExpense(View view) {
+        LinearLayout expenseField = (LinearLayout) ((ImageView) view).getParent();
+        LinearLayout expenseList = (LinearLayout) findViewById(R.id.expenses_list);
+        expenseList.removeView( expenseField );
+
+        long expenseId = Long.valueOf( expenseField.getTag().toString() );
+
+        Expense expense = Expense.findById(Expense.class, expenseId);
+        expense.delete();
+
+    }
 }

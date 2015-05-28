@@ -11,12 +11,14 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_weight="0.6"
-            android:layout_height="70dp"
+            android:layout_height="@dimen/header_height"
             android:background="@color/dark_blue">
 
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
                 android:layout_marginLeft="25dp"
                 android:src="@drawable/logo_white"
                 android:layout_alignParentLeft="true" />
@@ -33,7 +35,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.4"
                 android:layout_height="wrap_content"
-                android:minHeight="70dp"
+                android:minHeight="@dimen/header_height"
                 android:orientation="vertical"
                 android:background="@color/light_green"
                 android:visibility="gone"
@@ -41,7 +43,7 @@
 
                 <LinearLayout android:id="@+id/user_name_container_active"
                     android:layout_width="fill_parent"
-                    android:layout_height="70dp"
+                    android:layout_height="@dimen/header_height"
                     android:orientation="horizontal"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp">
@@ -97,7 +99,7 @@
             <LinearLayout android:id="@+id/user_name_container"
                 android:layout_width="0dp"
                 android:layout_weight="0.4"
-                android:layout_height="70dp"
+                android:layout_height="@dimen/header_height"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:visibility="visible"

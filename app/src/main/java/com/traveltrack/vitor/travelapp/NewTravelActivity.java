@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -207,8 +206,15 @@ public class NewTravelActivity extends Activity {
     }
 
     public void goBack(View view) {
-        ((ImageButton) view).setBackgroundColor(getResources().getColor(R.color.light_green));
+        view.setBackgroundColor(getResources().getColor(R.color.light_green));
         Intent intent = new Intent(this, TravelsActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void viewGraph(View view) {
+        view.setBackgroundColor(getResources().getColor(R.color.light_green));
+        Intent intent = new Intent(this, TravelsGraphActivity.class);
         startActivity(intent);
         finish();
     }
