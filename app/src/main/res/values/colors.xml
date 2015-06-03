@@ -3,6 +3,8 @@
     <color name="light_green">#87af99</color>
     <color name="gray">#7f8893</color>
     <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="transparent_gray">#bb7f8893</color>
 
     <color name="light_green_gradient_start">#92ae98</color>
     <color name="light_green_gradient_end">#abc1af</color>

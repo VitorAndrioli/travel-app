@@ -28,7 +28,7 @@
             android:paddingBottom="10dp"
             android:background="@drawable/light_green_background"
             android:src="@drawable/remove_icon"
-            android:onClick="remove"
+            android:onClick="askConfirmation"
             android:layout_height="fill_parent"/>
 
         <RelativeLayout

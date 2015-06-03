@@ -1,0 +1,136 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    tools:context="com.traveltrack.vitor.travelapp.TravelIndexActivity">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/footer"
+        android:layout_marginTop="@dimen/header_height">
+
+        <LinearLayout android:id="@+id/travel_list"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:animateLayoutChanges="true"
+            android:paddingTop="15dp"
+            android:layout_height="wrap_content"/>
+
+    </ScrollView>
+
+    <fragment android:id="@+id/header"
+        android:name="com.traveltrack.vitor.travelapp.HeaderFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_header" />
+
+    <LinearLayout android:id="@+id/footer"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/footer_height"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <ImageButton android:id="@+id/view_graph"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:src="@drawable/bar_graph_icon"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:scaleType="centerInside"
+            android:background="@color/dark_blue"
+            android:onClick="viewGraph"/>
+
+        <RelativeLayout
+            android:layout_width="2dp"
+            android:layout_height="fill_parent"
+            android:background="@color/white"/>
+
+        <ImageButton android:id="@+id/add_travel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:src="@drawable/add_travel"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:scaleType="centerInside"
+            android:background="@color/dark_blue"
+            android:onClick="addTravel"/>
+
+    </LinearLayout>
+
+    <RelativeLayout android:id="@+id/warning"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone"
+        android:clickable="true"
+        android:background="@color/transparent_gray">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:orientation="vertical"
+                android:background="@drawable/warning_background">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/remove_travel_warning"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:textColor="@color/dark_blue"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:layout_marginRight="@dimen/activity_vertical_margin"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"/>
+
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/yes"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:onClick="remove"
+                        android:textColor="@color/dark_blue"
+                        android:background="@drawable/light_green_background"/>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:layout_height="0dp"></RelativeLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:onClick="cancel"
+                        android:textColor="@color/dark_blue"
+                        android:background="@drawable/light_green_background"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </RelativeLayout>
+
+
+</RelativeLayout>

@@ -15,7 +15,7 @@ public HeaderFragment() {
         // Required empty public constructor
     }
     private LinearLayout userNameContainer, userNameContainerActive, userMenu;
-    private TextView userName, profile, logout;
+    private TextView userName, userNameActive, profile, logout;
     private User user;
 
     @Override
@@ -34,6 +34,7 @@ public HeaderFragment() {
         user = User.findById(User.class, userId);
 
         userName = (TextView) view.findViewById(R.id.user_name);
+        userNameActive = (TextView) view.findViewById(R.id.user_name_active);
         userNameContainer = (LinearLayout) view.findViewById(R.id.user_name_container);
         userNameContainerActive = (LinearLayout) view.findViewById(R.id.user_name_container_active);
         userMenu = (LinearLayout) view.findViewById(R.id.user_menu);
@@ -42,6 +43,7 @@ public HeaderFragment() {
 
 
         userName.setText(user.getName());
+        userNameActive.setText(user.getName());
         userNameContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

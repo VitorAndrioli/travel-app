@@ -4,7 +4,7 @@
     android:background="#ffffff"
     android:orientation="vertical"
     android:animateLayoutChanges="true"
-    tools:context="com.traveltrack.vitor.travelapp.TravelsActivity">
+    tools:context="com.traveltrack.vitor.travelapp.TravelIndexActivity">
 
     <ScrollView
         android:layout_width="fill_parent"

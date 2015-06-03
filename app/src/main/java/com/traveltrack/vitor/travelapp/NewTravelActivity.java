@@ -39,6 +39,7 @@ public class NewTravelActivity extends Activity {
     private Uri selectedImageUri;
     private Date beginning;
     private Date end;
+    private Currency currency;
 
     private Calendar myCalendar;
     private DatePickerDialog.OnDateSetListener date;
@@ -67,14 +68,15 @@ public class NewTravelActivity extends Activity {
         travel = new Travel(name,
                 selectedImageUri == null ? null : selectedImageUri.toString(),
                 beginning,
-                end);
+                end,
+                currency);
 
         travel.save();
 
         TravelUser travel_user = new TravelUser(travel, user, budget);
         travel_user.save();
 
-        Intent i = new Intent(NewTravelActivity.this, TravelsActivity.class);
+        Intent i = new Intent(NewTravelActivity.this, TravelIndexActivity.class);
         startActivity(i);
 
     }
@@ -207,7 +209,7 @@ public class NewTravelActivity extends Activity {
 
     public void goBack(View view) {
         view.setBackgroundColor(getResources().getColor(R.color.light_green));
-        Intent intent = new Intent(this, TravelsActivity.class);
+        Intent intent = new Intent(this, TravelIndexActivity.class);
         startActivity(intent);
         finish();
     }

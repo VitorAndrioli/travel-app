@@ -20,17 +20,22 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class TravelsActivity extends Activity {
+public class TravelIndexActivity extends Activity {
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy", Locale.US);
+    private RelativeLayout warning;
+    private Travel travelToRemove;
+    private RelativeLayout travelField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_travels);
+        setContentView(R.layout.activity_travel_index);
 
         SharedPreferences shared_preferences = getSharedPreferences("USER_DATA", 0);
         long userId = shared_preferences.getLong("userId", 0);
         User user = User.findById(User.class, userId);
+
+        warning = (RelativeLayout) findViewById(R.id.warning);
 
         List<TravelUser> travels = user.getTravels();
 
@@ -138,13 +143,26 @@ public class TravelsActivity extends Activity {
     }
 
     public void remove(View view) {
-        RelativeLayout travelField = (RelativeLayout) ((ImageView) view).getParent().getParent();
+
         LinearLayout travelList = (LinearLayout) findViewById(R.id.travel_list);
         travelList.removeView( travelField );
 
+        travelToRemove.delete();
+        warning.setVisibility(View.GONE);
+
+    }
+
+    public void cancel(View view) {
+        travelToRemove = null;
+        warning.setVisibility(View.GONE);
+    }
+
+    public void askConfirmation(View view) {
+        warning.setVisibility(View.VISIBLE);
+
+        travelField = (RelativeLayout) ((ImageView) view).getParent().getParent();
         long travelId = Long.valueOf(travelField.getTag().toString() );
-        Travel travel = Travel.findById(Travel.class, travelId);
-        travel.delete();
+        travelToRemove = Travel.findById(Travel.class, travelId);
 
     }
 

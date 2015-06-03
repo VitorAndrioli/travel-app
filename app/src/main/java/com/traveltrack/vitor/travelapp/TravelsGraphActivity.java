@@ -12,11 +12,12 @@ public class TravelsGraphActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travels_graph);
+
     }
 
     public void goBack(View view) {
         view.setBackgroundColor(getResources().getColor(R.color.light_green));
-        Intent intent = new Intent(this, TravelsActivity.class);
+        Intent intent = new Intent(this, TravelIndexActivity.class);
         startActivity(intent);
         finish();
     }

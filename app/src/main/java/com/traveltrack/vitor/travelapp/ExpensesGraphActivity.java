@@ -13,13 +13,12 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.utils.PercentFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class GraphActivity extends Activity {
+public class ExpensesGraphActivity extends Activity {
     private PieChart mChart;
     private Travel travel;
     private User user;
@@ -27,7 +26,7 @@ public class GraphActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_graph);
+        setContentView(R.layout.activity_expenses_graph);
 
         Intent intent = getIntent();
         int travelId = Integer.parseInt(intent.getStringExtra("travelId"));
@@ -38,26 +37,12 @@ public class GraphActivity extends Activity {
         travel = Travel.findById(Travel.class, travelId);
 
         mChart = (PieChart) findViewById(R.id.chart);
-        mChart.setUsePercentValues(true);
+        mChart.setUsePercentValues(false);
         mChart.setDescription("");
-
         mChart.setDragDecelerationFrictionCoef(0.95f);
-
         mChart.setDrawHoleEnabled(false);
-        mChart.setHoleColorTransparent(false);
-
-        mChart.setTransparentCircleColor(Color.WHITE);
-
-        mChart.setHoleRadius(58f);
-        mChart.setTransparentCircleRadius(61f);
-
-        mChart.setDrawCenterText(true);
-
         mChart.setRotationAngle(0);
-        // enable rotation of the chart by touch
-        mChart.setRotationEnabled(true);
-
-        //mChart.setCenterText("MPAndroidChart\nby Philipp Jahoda");
+        mChart.setRotationEnabled(false);
 
         setData();
 
@@ -79,15 +64,16 @@ public class GraphActivity extends Activity {
         List<Category> categories = Category.listAll(Category.class);
 
         for (int i=0; i<categories.size(); i++) {
-            Category category = (Category) categories.get(i);
-            float total = user.getExpensesByCategory(category, travel);
+            Category category = categories.get(i);
+            float total = category.getExpenses(user, travel);
+
             if (total > 0) {
-                xVals.add(category.getName());
+                xVals.add(category.getPortName());
                 yVals1.add( new Entry( total, i ) );
             }
         }
 
-        PieDataSet dataSet = new PieDataSet(yVals1, "Election Results");
+        PieDataSet dataSet = new PieDataSet(yVals1, "");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
 
@@ -95,7 +81,6 @@ public class GraphActivity extends Activity {
                 R.color.pie_chart_4, R.color.pie_chart_5, R.color.pie_chart_6}, this);
 
         PieData data = new PieData(xVals, dataSet);
-        data.setValueFormatter(new PercentFormatter());
         data.setValueTextSize(11f);
         data.setValueTextColor(Color.WHITE);
         mChart.setData(data);

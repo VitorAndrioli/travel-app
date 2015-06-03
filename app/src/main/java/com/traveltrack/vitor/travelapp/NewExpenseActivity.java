@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,11 +36,11 @@ public class NewExpenseActivity extends ActionBarActivity {
         setContentView(R.layout.activity_new_expense);
 
         Intent intent = getIntent();
-        int travel_id = Integer.parseInt(intent.getStringExtra("travelId"));
+        int travelId = Integer.parseInt(intent.getStringExtra("travelId"));
         String categoryName = intent.getStringExtra("categoryName");
         category = Category.find(Category.class, "name = ?", categoryName).get(0);
 
-        currentTravel = Travel.findById(Travel.class, travel_id);
+        currentTravel = Travel.findById(Travel.class, travelId);
 
         ((TextView) findViewById(R.id.date)).setText(sdf.format(new Date()));
         Uri imageUri = Uri.parse("android.resource://com.traveltrack.vitor.travelapp/drawable/" + categoryName + "_big");
@@ -54,7 +55,7 @@ public class NewExpenseActivity extends ActionBarActivity {
         String description = ((EditText) findViewById(R.id.description)).getText().toString();
 
         SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);
-        long userId = sharedPreferences.getLong("user_id", 0);
+        long userId = sharedPreferences.getLong("userId", 0);
         User user = User.findById(User.class, userId);
 
         Expense expense = new Expense(value, description, category, user, currentTravel, new Date());
@@ -100,4 +101,12 @@ public class NewExpenseActivity extends ActionBarActivity {
         startActivity(intent);
         finish();
     }
+
+    public void viewGraph(View view) {
+        ((ImageButton) view).setBackgroundColor(getResources().getColor(R.color.light_green));
+        Intent intent = new Intent(this, ExpensesGraphActivity.class);
+        intent.putExtra("travelId", currentTravel.getId().toString());
+        startActivity(intent);
+    }
+
 }

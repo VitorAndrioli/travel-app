@@ -17,7 +17,7 @@
         tools:replace="android:icon,android:theme" >
         <meta-data
             android:name="DATABASE"
-            android:value="travel_app.db" />
+            android:value="orcamentour.db" />
         <meta-data
             android:name="VERSION"
             android:value="2" />
@@ -44,7 +44,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize" >
         </activity>
         <activity
-            android:name=".TravelsActivity"
+            android:name=".TravelIndexActivity"
             android:label="@string/title_activity_travels"
             android:screenOrientation="portrait" >
         </activity>
@@ -67,7 +67,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize" >
         </activity>
         <activity
-            android:name=".GraphActivity"
+            android:name=".ExpensesGraphActivity"
             android:label="@string/title_activity_graph" >
         </activity>
         <activity
@@ -77,6 +77,10 @@
         <activity
             android:name=".CategoriesActivity"
             android:label="@string/title_activity_categories" >
+        </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile" >
         </activity>
     </application>
 

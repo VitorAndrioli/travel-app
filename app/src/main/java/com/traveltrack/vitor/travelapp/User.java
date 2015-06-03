@@ -22,20 +22,6 @@ public class User extends SugarRecord<User> {
         return userTravels;
     }
 
-    public float getExpensesByCategory(Category category, Travel travel) {
-        float total = 0;
-
-        List<Expense> expenses = Expense.find(Expense.class,
-            "user = ? and category = ? and travel = ?",
-            this.getId().toString(), category.getId().toString(), travel.getId().toString());
-
-        for (int i=0; i<expenses.size(); i++) {
-            total += expenses.get(i).getValue();
-        }
-
-        return total;
-    }
-
     public void setName(String name) {
         this.name = name;
     }

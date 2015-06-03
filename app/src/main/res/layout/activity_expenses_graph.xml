@@ -4,23 +4,14 @@
     android:background="#ffffff"
     android:orientation="vertical"
     android:animateLayoutChanges="true"
-    tools:context="com.traveltrack.vitor.travelapp.TravelsActivity">
+    tools:context="com.traveltrack.vitor.travelapp.TravelIndexActivity">
 
-
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/footer"
-        android:layout_marginTop="@dimen/header_height">
-
-        <LinearLayout android:id="@+id/travel_list"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:animateLayoutChanges="true"
-            android:paddingTop="15dp"
-            android:layout_height="wrap_content"/>
-
-    </ScrollView>
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/chart"
+        android:layout_marginTop="@dimen/header_height"
+        android:layout_above="@id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" />
 
     <fragment android:id="@+id/header"
         android:name="com.traveltrack.vitor.travelapp.HeaderFragment"
@@ -34,15 +25,31 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
+        <ImageButton android:id="@+id/back"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:src="@drawable/back_icon"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:scaleType="centerInside"
+            android:background="@color/dark_blue"
+            android:onClick="goBack"/>
+
+        <RelativeLayout
+            android:layout_width="2dp"
+            android:layout_height="fill_parent"
+            android:background="@color/white"/>
+
         <ImageButton android:id="@+id/view_graph"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="fill_parent"
-            android:src="@drawable/bar_graph_icon"
+            android:src="@drawable/pie_graph_icon"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:scaleType="centerInside"
-            android:background="@color/dark_blue"
+            android:background="@color/light_green"
             android:onClick="viewGraph"/>
 
         <RelativeLayout
@@ -50,16 +57,18 @@
             android:layout_height="fill_parent"
             android:background="@color/white"/>
 
-        <ImageButton android:id="@+id/add_travel"
+        <ImageButton android:id="@+id/add_expense"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="fill_parent"
-            android:src="@drawable/add_travel"
+            android:src="@drawable/add_expense"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:scaleType="centerInside"
             android:background="@color/dark_blue"
-            android:onClick="addTravel"/>
+            android:onClick="addExpense"/>
 
     </LinearLayout>
+
 </RelativeLayout>
+

@@ -4,7 +4,7 @@
     android:background="#ffffff"
     android:orientation="vertical"
     android:animateLayoutChanges="true"
-    tools:context="com.traveltrack.vitor.travelapp.TravelsActivity">
+    tools:context="com.traveltrack.vitor.travelapp.TravelIndexActivity">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -155,5 +155,75 @@
             android:onClick="addExpense"/>
 
     </LinearLayout>
+
+    <RelativeLayout android:id="@+id/warning"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone"
+        android:clickable="true"
+        android:background="@color/transparent_gray">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
+            android:background="@drawable/warning_background">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remove_expense_warning"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:textColor="@color/dark_blue"
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"/>
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yes"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:onClick="remove"
+                    android:textColor="@color/dark_blue"
+                    android:background="@drawable/light_green_background"/>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_height="0dp"></RelativeLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:onClick="cancel"
+                    android:textColor="@color/dark_blue"
+                    android:background="@drawable/light_green_background"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

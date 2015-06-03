@@ -55,13 +55,12 @@
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/default_profile_picture"/>
 
-                    <TextView
+                    <TextView android:id="@+id/user_name_active"
                         android:layout_width="0dp"
                         android:layout_weight="0.7"
                         android:layout_marginLeft="5dp"
                         android:layout_gravity="center_vertical"
                         android:layout_height="wrap_content"
-                        android:text="nome"
                         android:textColor="@color/white"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"/>

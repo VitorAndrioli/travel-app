@@ -48,7 +48,7 @@ public class LoginActivity extends Activity {
             editor.putLong("userId", user.getId());
             editor.commit();
 
-            Intent intent = new Intent(this, TravelsActivity.class);
+            Intent intent = new Intent(this, TravelIndexActivity.class);
             startActivity(intent);
             finish();
         }

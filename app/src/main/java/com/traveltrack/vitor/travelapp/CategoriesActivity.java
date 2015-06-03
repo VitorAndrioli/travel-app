@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 
 
 public class CategoriesActivity extends Activity {
     private int travelId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,13 @@ public class CategoriesActivity extends Activity {
         intent.putExtra("travelId", String.valueOf(travelId));
         startActivity(intent);
         finish();
+    }
+
+    public void viewGraph(View view) {
+        ((ImageButton) view).setBackgroundColor(getResources().getColor(R.color.light_green));
+        Intent intent = new Intent(this, ExpensesGraphActivity.class);
+        intent.putExtra("travelId", String.valueOf(travelId));
+        startActivity(intent);
     }
 
 }

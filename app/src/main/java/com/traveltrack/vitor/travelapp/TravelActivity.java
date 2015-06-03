@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -22,6 +23,10 @@ import static android.net.Uri.parse;
 public class TravelActivity extends Activity {
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy", Locale.US);
     private Travel currentTravel;
+    private RelativeLayout warning;
+    private Expense expenseToRemove;
+    private LinearLayout expenseField;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,8 @@ public class TravelActivity extends Activity {
         SharedPreferences shared_preferences = getSharedPreferences("USER_DATA", 0);
         long userId = shared_preferences.getLong("userId", 0);
         User user = User.findById(User.class, userId);
+
+        warning = (RelativeLayout) findViewById(R.id.warning);
 
         Intent intent = getIntent();
         int travelId = Integer.parseInt(intent.getStringExtra("travelId"));
@@ -90,7 +97,7 @@ public class TravelActivity extends Activity {
     public void goBack(View view) {
         ((ImageButton) view).setBackgroundColor(getResources().getColor(R.color.light_green));
 
-        Intent intent = new Intent(this, TravelsActivity.class);
+        Intent intent = new Intent(this, TravelIndexActivity.class);
         startActivity(intent);
         finish();
     }
@@ -104,8 +111,8 @@ public class TravelActivity extends Activity {
 
     public void viewGraph(View view) {
         ((ImageButton) view).setBackgroundColor(getResources().getColor(R.color.light_green));
-        Intent intent = new Intent(this, GraphActivity.class);
-        intent.putExtra( "travelId", currentTravel.getId().toString() );
+        Intent intent = new Intent(this, ExpensesGraphActivity.class);
+        intent.putExtra("travelId", currentTravel.getId().toString());
         startActivity(intent);
     }
 
@@ -118,15 +125,26 @@ public class TravelActivity extends Activity {
         super.onStop();
     }
 
-    public void removeExpense(View view) {
-        LinearLayout expenseField = (LinearLayout) ((ImageView) view).getParent();
+    public void remove(View view) {
         LinearLayout expenseList = (LinearLayout) findViewById(R.id.expenses_list);
         expenseList.removeView( expenseField );
 
-        long expenseId = Long.valueOf( expenseField.getTag().toString() );
+        expenseToRemove.delete();
+        warning.setVisibility(View.GONE);
 
-        Expense expense = Expense.findById(Expense.class, expenseId);
-        expense.delete();
+    }
+
+    public void cancel(View view) {
+        expenseToRemove = null;
+        warning.setVisibility(View.GONE);
+    }
+
+    public void askConfirmation(View view) {
+        warning.setVisibility(View.VISIBLE);
+
+        expenseField = (LinearLayout) ((ImageView) view).getParent();
+        long expenseId = Long.valueOf(expenseField.getTag().toString());
+        expenseToRemove = Expense.findById(Expense.class, expenseId);
 
     }
 }

@@ -10,14 +10,16 @@ public class Travel extends SugarRecord<Travel> {
     private Date start;
     private Date end;
     private String imageURI;
+    private Currency currency;
 
     public Travel() {}
 
-    public Travel(String name, String imageURI, Date start, Date end) {
+    public Travel(String name, String imageURI, Date start, Date end, Currency currency) {
         this.setName(name);
         this.setImageURI(imageURI);
         this.setStart(start);
         this.setEnd(end);
+        this.setCurrency(currency);
     }
 
     public Travel(String name, Date start, Date end) {
@@ -120,6 +122,14 @@ public class Travel extends SugarRecord<Travel> {
 
     public Date getEnd() {
         return this.end;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public Currency getCurrency() {
+        return this.currency;
     }
 
 }
