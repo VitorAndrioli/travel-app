@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Currencies>
+    <currency name="Baht tailandês" code="THB" symbol="฿"/>
+
+    <currency name="Coroa dinamarquesa" code="DKK" symbol="kr"/>
+    <currency name="Coroa norueguesa" code="NOK" symbol="kr"/>
+    <currency name="Coroa sueca" code="SEK" symbol="kr"/>
+    <currency name="Coroa tcheca" code="CZK" symbol="Kč"/>
+
+    <currency name="Dólar americano" code="USD" symbol="$"/>
+    <currency name="Dólar australiano" code="AUD" symbol="$"/>
+    <currency name="Dólar canadense" code="CAD" symbol="$"/>
+    <currency name="Dólar de Hong Kong" code="HKD" symbol="HK$"/>
+    <currency name="Dólar da Nova Zelândia" code="NZD" symbol="$"/>
+    <currency name="Dólar de Singapura" code="SGD" symbol="$"/>
+
+    <currency name="Florim húngaro" code="HUF" symbol="Ft"/>
+    <currency name="Franco suiço" code="CHF" symbol="CHF"/>
+
+    <currency name="Iene" code="JPY" symbol="¥"/>
+
+    <currency name="Kuna croata" code="HRK" symbol="kn"/>
+
+    <currency name="Leu romeno" code="RON" symbol="lei"/>
+    <currency name="Lev" code="BGN" symbol="лв"/>
+    <currency name="Libra esterlina" code="GBP" symbol="£"/>
+    <currency name="Lira turca" code="TRY" symbol="₺"/>
+
+    <currency name="Novo shekel" code="ILS" symbol="₪"/>
+
+    <currency name="Peso filipino" code="PHP" symbol="₱"/>
+    <currency name="Peso mexicano" code="MXN" symbol="$"/>
+
+    <currency name="Rand" code="ZAR" symbol="R"/>
+    <currency name="Real" code="BRL" symbol="R$"/>
+    <currency name="Ringgit" code="MYR" symbol="RM"/>
+    <currency name="Rublo" code="RUB" symbol="руб"/>
+    <currency name="Rupia indiana" code="INR" symbol="₹"/>
+    <currency name="Rupia indonésia" code="IDR" symbol="Rp"/>
+
+    <currency name="Won" code="KRW" symbol="₩"/>
+
+    <currency name="Yuan" code="CNY" symbol="¥"/>
+
+    <currency name="Zloty" code="PLN" symbol="zł"/>
+
+</Currencies>

@@ -11,13 +11,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class HeaderFragment extends Fragment {
-public HeaderFragment() {
-        // Required empty public constructor
-    }
+
     private LinearLayout userNameContainer, userNameContainerActive, userMenu;
     private TextView userName, userNameActive, profile, logout;
     private User user;
 
+    public HeaderFragment() {
+        // Required empty public constructor
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +23,7 @@ import java.util.Locale;
 public class NewExpenseActivity extends ActionBarActivity {
     Travel currentTravel;
     Category category;
+    Date expenseDate;
 
     private Calendar myCalendar;
     private DatePickerDialog.OnDateSetListener date;
@@ -35,6 +35,9 @@ public class NewExpenseActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_expense);
 
+        findViewById(R.id.add_expense).setBackgroundColor(getResources().getColor(R.color.light_green));
+        findViewById(R.id.add_expense).setClickable(false);
+
         Intent intent = getIntent();
         int travelId = Integer.parseInt(intent.getStringExtra("travelId"));
         String categoryName = intent.getStringExtra("categoryName");
@@ -42,13 +45,14 @@ public class NewExpenseActivity extends ActionBarActivity {
 
         currentTravel = Travel.findById(Travel.class, travelId);
 
-        ((TextView) findViewById(R.id.date)).setText(sdf.format(new Date()));
+        expenseDate = new Date();
+        ((TextView) findViewById(R.id.date)).setText(sdf.format(expenseDate));
         Uri imageUri = Uri.parse("android.resource://com.traveltrack.vitor.travelapp/drawable/" + categoryName + "_big");
         ((ImageView) findViewById(R.id.picture)).setImageURI(imageUri);
 
     }
 
-    public void create(View view) {
+    public void submit(View view) {
         String valueField = ((EditText) findViewById(R.id.value)).getText().toString();
         double value = valueField.isEmpty() ? 0 : Double.parseDouble(valueField);
 
@@ -58,7 +62,7 @@ public class NewExpenseActivity extends ActionBarActivity {
         long userId = sharedPreferences.getLong("userId", 0);
         User user = User.findById(User.class, userId);
 
-        Expense expense = new Expense(value, description, category, user, currentTravel, new Date());
+        Expense expense = new Expense(value, description, category, user, currentTravel, expenseDate);
 
         expense.save();
 
@@ -82,9 +86,9 @@ public class NewExpenseActivity extends ActionBarActivity {
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                Date date = myCalendar.getTime();
+                expenseDate = myCalendar.getTime();
 
-                ((TextView) findViewById(R.id.date)).setText(sdf.format(date));
+                ((TextView) findViewById(R.id.date)).setText(sdf.format(expenseDate));
 
             }
 
@@ -103,10 +107,12 @@ public class NewExpenseActivity extends ActionBarActivity {
     }
 
     public void viewGraph(View view) {
-        ((ImageButton) view).setBackgroundColor(getResources().getColor(R.color.light_green));
+        view.setBackgroundColor(getResources().getColor(R.color.light_green));
         Intent intent = new Intent(this, ExpensesGraphActivity.class);
         intent.putExtra("travelId", currentTravel.getId().toString());
         startActivity(intent);
     }
+
+
 
 }

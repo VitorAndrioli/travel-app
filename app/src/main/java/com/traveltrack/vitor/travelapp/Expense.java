@@ -2,6 +2,7 @@ package com.traveltrack.vitor.travelapp;
 
 import com.orm.SugarRecord;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 
 public class Expense extends SugarRecord<Expense> {
@@ -24,6 +25,12 @@ public class Expense extends SugarRecord<Expense> {
         this.setCategory(category);
         this.setUser(user);
         this.setTravel(travel);
+    }
+
+    @Override
+    public String toString() {
+        DecimalFormat df = new DecimalFormat("#,###.00");
+        return this.getTravel().getCurrency().getSymbol() + " " + df.format( this.getValue() );
     }
 
     public void setValue(double value) {

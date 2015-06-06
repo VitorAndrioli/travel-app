@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ExpensesGraphActivity extends Activity {
     private PieChart mChart;
-    private Travel travel;
+    private Travel currentTravel;
     private User user;
 
     @Override
@@ -28,13 +28,16 @@ public class ExpensesGraphActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expenses_graph);
 
+        findViewById(R.id.view_graph).setBackgroundColor(getResources().getColor(R.color.light_green));
+        findViewById(R.id.view_graph).setClickable(false);
+
         Intent intent = getIntent();
         int travelId = Integer.parseInt(intent.getStringExtra("travelId"));
 
         SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);
         long userId = sharedPreferences.getLong("userId", 0);
         user = User.findById(User.class, userId);
-        travel = Travel.findById(Travel.class, travelId);
+        currentTravel = Travel.findById(Travel.class, travelId);
 
         mChart = (PieChart) findViewById(R.id.chart);
         mChart.setUsePercentValues(false);
@@ -65,7 +68,7 @@ public class ExpensesGraphActivity extends Activity {
 
         for (int i=0; i<categories.size(); i++) {
             Category category = categories.get(i);
-            float total = category.getExpenses(user, travel);
+            float total = category.getExpenses(user, currentTravel);
 
             if (total > 0) {
                 xVals.add(category.getPortName());
@@ -91,22 +94,19 @@ public class ExpensesGraphActivity extends Activity {
         mChart.invalidate();
     }
 
-    public void goBack(View view) {
-        view.setBackgroundColor(getResources().getColor(R.color.light_green));
-        Intent intent = new Intent(this, TravelActivity.class);
-        intent.putExtra("travelId", travel.getId().toString());
-        startActivity(intent);
-        finish();
-    }
-
     public void addExpense(View view) {
         view.setBackgroundColor(getResources().getColor(R.color.light_green));
         Intent intent = new Intent(this, CategoriesActivity.class);
-        intent.putExtra("travelId", travel.getId().toString());
+        intent.putExtra("travelId", currentTravel.getId().toString());
+        startActivity(intent);
+    }
+
+    public void goBack(View view) {
+        view.setBackgroundColor(getResources().getColor(R.color.light_green));
+        Intent intent = new Intent(this, TravelActivity.class);
+        intent.putExtra("travelId", currentTravel.getId().toString());
         startActivity(intent);
         finish();
     }
-
-
 
 }

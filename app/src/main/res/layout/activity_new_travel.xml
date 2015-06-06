@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/white"
     android:orientation="vertical"
     android:animateLayoutChanges="true"
     tools:context="com.traveltrack.vitor.travelapp.TravelIndexActivity">
@@ -63,27 +63,48 @@
                     android:layout_marginTop="10dp"
                     android:inputType="text"/>
 
-                <EditText android:id="@+id/budget"
+                <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/budget"
-                    android:background="@drawable/light_green_border"
-                    android:textColorHint="@color/gray"
-                    android:textColor="@color/dark_blue"
-                    android:paddingBottom="@dimen/input_text_vertical_padding"
-                    android:paddingTop="@dimen/input_text_vertical_padding"
-                    android:paddingLeft="@dimen/input_text_horizontal_padding"
-                    android:paddingRight="@dimen/input_text_horizontal_padding"
                     android:layout_marginTop="10dp"
-                    android:inputType="numberDecimal"/>
+                    android:orientation="horizontal">
 
-                <TextView android:id="@+id/login_error"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/login_error"
-                    android:textColor="@color/error"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"/>
+
+                    <EditText android:id="@+id/budget"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/budget"
+                        android:background="@drawable/light_green_border"
+                        android:textColorHint="@color/gray"
+                        android:textColor="@color/dark_blue"
+                        android:paddingBottom="@dimen/input_text_vertical_padding"
+                        android:paddingTop="@dimen/input_text_vertical_padding"
+                        android:paddingLeft="@dimen/input_text_horizontal_padding"
+                        android:paddingRight="@dimen/input_text_horizontal_padding"
+                        android:inputType="numberDecimal"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="0.1"
+                        android:layout_height="0dp"/>
+
+                    <TextView android:id="@+id/currency"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/light_green_background"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:textSize="20dp"
+                        android:gravity="center"
+                        android:paddingLeft="7dp"
+                        android:textColor="@color/dark_blue"
+                        android:text="@string/currency"
+                        android:spinnerMode="dialog"
+                        android:onClick="selectCurrency"/>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -122,7 +143,7 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="0.2"
+                        android:layout_weight="0.1"
                         android:layout_height="0dp"/>
 
                     <LinearLayout
@@ -155,7 +176,7 @@
 
 
                 </LinearLayout>
-
+                
                 <Button
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -177,54 +198,11 @@
         android:layout_height="wrap_content"
         tools:layout="@layout/fragment_header" />
 
-    <LinearLayout android:id="@+id/footer"
+    <fragment android:id="@+id/footer"
+        android:name="com.traveltrack.vitor.travelapp.MainFooterFragment"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/footer_height"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="fill_parent"
-            android:src="@drawable/back_icon"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:scaleType="centerInside"
-            android:background="@color/dark_blue"
-            android:onClick="goBack"/>
-
-        <RelativeLayout
-            android:layout_width="2dp"
-            android:layout_height="fill_parent"
-            android:background="@color/white"/>
-
-        <ImageButton android:id="@+id/view_graph"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="fill_parent"
-            android:src="@drawable/bar_graph_icon"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:scaleType="centerInside"
-            android:background="@color/dark_blue"
-            android:onClick="viewGraph"/>
-
-        <RelativeLayout
-            android:layout_width="2dp"
-            android:layout_height="fill_parent"
-            android:background="@color/white"/>
-
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="fill_parent"
-            android:src="@drawable/add_travel"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:scaleType="centerInside"
-            android:background="@color/light_green"/>
-
-    </LinearLayout>
+        tools:layout="@layout/fragment_main_footer"/>
 
 </RelativeLayout>

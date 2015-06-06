@@ -13,7 +13,7 @@ import java.util.TimerTask;
 
 public class SplashActivity extends Activity {
     private static String DATABASE_NAME = "orcamentour.db";
-    public final static String DATABASE_PATH = "/data/data/br.com.imabrasil.alergiadrogas/databases/";
+    public final static String DATABASE_PATH = "/data/data/com.traveltrack.vitor.travelapp/databases/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,8 @@ public class SplashActivity extends Activity {
 
 
         if (!checkDataBase()) {
-            createDataBase();
+            DatabaseCreator dbCreator = new DatabaseCreator();
+            dbCreator.createDatabase(this);
         }
 
         SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);
@@ -61,25 +62,5 @@ public class SplashActivity extends Activity {
             Log.v("db log", "database exists");
         }
         return exist;
-    }
-
-    public void createDataBase() {
-        String[] categoryPortNames = {"passagem", "acomodação", "transporte", "alimentação", "laser", "outros"};
-        String[] categoryNames = {"passage", "accommodation", "transportation", "alimentation", "leisure", "other"};
-
-        for (int i=0; i< categoryNames.length; i++) {
-            String uri = "android.resource://com.traveltrack.vitor.travelapp/drawable/" + categoryNames[i];
-            Category category = new Category(categoryNames[i], categoryPortNames[i], uri);
-            category.save();
-        }
-
-        String[] currencyNames = {"Real", "Dolar", "Euro", "Libra", "Peso Argentino"};
-        String[] currencySymbols = {"R$", "U$", "€", "£", "$"};
-
-        for (int i=0; i< currencyNames.length; i++) {
-            Currency currency = new Currency(currencyNames[i], currencySymbols[i]);
-            currency.save();
-        }
-
     }
 }

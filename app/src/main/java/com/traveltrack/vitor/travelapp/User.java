@@ -17,9 +17,13 @@ public class User extends SugarRecord<User> {
         this.setPassword(password);
     }
 
-    public List<TravelUser> getTravels() {
-        List<TravelUser> userTravels = TravelUser.find(TravelUser.class, "user = ?", this.getId().toString());
-        return userTravels;
+    public List<Travel> getTravels() {
+        List<Travel> travels = Travel.findWithQuery(
+                Travel.class,
+                "SELECT * FROM Travel INNER JOIN Travel_user ON Travel.id = Travel_user.travel where Travel_user.user = ? ORDER BY Travel.start DESC",
+                this.getId().toString());
+
+        return travels;
     }
 
     public void setName(String name) {

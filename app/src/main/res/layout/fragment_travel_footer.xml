@@ -1,0 +1,50 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.traveltrack.vitor.travelapp.TravelFooterFragment">
+
+    <LinearLayout android:id="@+id/footer"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <ImageButton android:id="@+id/back"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:src="@drawable/back_icon"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_marginRight="2dp"
+            android:scaleType="centerInside"
+            android:background="@color/dark_blue"
+            android:onClick="goBack"/>
+
+        <ImageButton android:id="@+id/view_graph"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:src="@drawable/pie_graph_icon"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginRight="2dp"
+            android:scaleType="centerInside"
+            android:background="@color/dark_blue"
+            android:onClick="viewGraph"/>
+
+        <ImageButton android:id="@+id/add_expense"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:src="@drawable/add_expense"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:scaleType="centerInside"
+            android:background="@color/dark_blue"
+            android:onClick="addExpense"/>
+
+    </LinearLayout>
+
+</FrameLayout>

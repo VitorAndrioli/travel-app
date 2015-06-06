@@ -1,9 +1,11 @@
 package com.traveltrack.vitor.travelapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -16,6 +18,7 @@ import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -50,10 +53,39 @@ public class NewTravelActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_travel);
 
+        findViewById(R.id.add_travel).setBackgroundColor(getResources().getColor(R.color.light_green));
+        findViewById(R.id.add_travel).setClickable(false);
+
         SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);
         long userId = sharedPreferences.getLong("userId", 0);
         user = User.findById(User.class, userId);
 
+
+    }
+
+    public void selectCurrency(View view) {
+        final ArrayAdapter<Currency> adapter = new ArrayAdapter<Currency>(this, android.R.layout.simple_list_item_1);
+
+        List<Currency> currencies = Currency.listAll(Currency.class);
+        for (int i=0; i<currencies.size(); i++) {
+            adapter.add(currencies.get(i));
+        }
+
+        new AlertDialog.Builder(this)
+                .setTitle("Moeda")
+                .setAdapter(adapter, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        String currencyCode = adapter.getItem(which).getCode();
+                        currency = adapter.getItem(which);
+
+                        ((TextView) findViewById(R.id.currency)).setText(currencyCode);
+
+                        dialog.dismiss();
+                    }
+                }).create().show();
     }
 
     public void create(View view) {
@@ -213,12 +245,4 @@ public class NewTravelActivity extends Activity {
         startActivity(intent);
         finish();
     }
-
-    public void viewGraph(View view) {
-        view.setBackgroundColor(getResources().getColor(R.color.light_green));
-        Intent intent = new Intent(this, TravelsGraphActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
 }

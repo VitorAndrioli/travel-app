@@ -13,18 +13,14 @@ public class TravelsGraphActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travels_graph);
 
+        findViewById(R.id.view_graph).setBackgroundColor(getResources().getColor(R.color.light_green));
+        findViewById(R.id.view_graph).setClickable(false);
+
     }
 
     public void goBack(View view) {
         view.setBackgroundColor(getResources().getColor(R.color.light_green));
         Intent intent = new Intent(this, TravelIndexActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    public void addTravel(View view) {
-        view.setBackgroundColor(getResources().getColor(R.color.light_green));
-        Intent intent = new Intent(this, NewTravelActivity.class);
         startActivity(intent);
         finish();
     }

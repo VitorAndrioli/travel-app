@@ -7,12 +7,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
@@ -26,6 +26,7 @@ public class TravelActivity extends Activity {
     private RelativeLayout warning;
     private Expense expenseToRemove;
     private LinearLayout expenseField;
+    private TravelUser travel_user;
 
 
     @Override
@@ -44,14 +45,11 @@ public class TravelActivity extends Activity {
 
         currentTravel = Travel.findById(Travel.class, travelId);
 
-        TravelUser travel_user = TravelUser.find(TravelUser.class, "travel = ? and user = ?", currentTravel.getId().toString(), user.getId().toString()).get(0);
+        travel_user = TravelUser.find(TravelUser.class, "travel = ? and user = ?", currentTravel.getId().toString(), user.getId().toString()).get(0);
 
         ((TextView) findViewById(R.id.name)).setText(currentTravel.getName());
 
-        if (travel_user.getBudget() > 0)
-            ((TextView) findViewById(R.id.budget)).setText(String.valueOf(currentTravel.getTotalExpenses()) + " / " + String.valueOf( travel_user.getBudget()));
-        else
-            ((TextView) findViewById(R.id.budget)).setText(String.valueOf(currentTravel.getTotalExpenses()));
+        updateExpenses();
 
         if (currentTravel.getStart() != null && currentTravel.getEnd() != null)
             ((TextView) findViewById(R.id.date)).setText(sdf.format(currentTravel.getStart()) + " - " + sdf.format(currentTravel.getEnd()));
@@ -79,72 +77,85 @@ public class TravelActivity extends Activity {
             row.setTag(expense.getId());
 
             TextView value = (TextView) row.findViewById(R.id.value);
+            TextView date = (TextView) row.findViewById(R.id.date);
             TextView description = (TextView) row.findViewById(R.id.description);
             ImageView category = (ImageView) row.findViewById(R.id.category);
 
-            value.setText(String.valueOf( expense.getValue() ));
-            description.setText(String.valueOf(expense.getDescription()));
+            value.setText(String.valueOf( expense.toString() ));
+            date.setText(sdf.format(expense.getDate()));
+            if (expense.getDescription().isEmpty()) {
+                row.findViewById(R.id.border).setVisibility(View.GONE);
+            } else
+                description.setText(String.valueOf(expense.getDescription()));
             category.setImageURI(Uri.parse(expense.getCategory().getURI()));
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 90);
-            params.setMargins(0, 5, 0, 5);
+            params.setMargins(0, 10, 0, 0);
             row.setLayoutParams(params);
 
             ((LinearLayout) expensesList).addView(row);
         }
     }
 
-    public void goBack(View view) {
-        ((ImageButton) view).setBackgroundColor(getResources().getColor(R.color.light_green));
+    public void updateExpenses() {
+        DecimalFormat df = new DecimalFormat("#,###.00");
+        String totalExpenses = currentTravel.getCurrency().getSymbol() + " " + df.format(currentTravel.getTotalExpenses());
 
+        if (travel_user.getBudget() > 0) {
+            String budget = currentTravel.getCurrency().getSymbol() + " " + df.format(travel_user.getBudget());
+            ((TextView) findViewById(R.id.budget)).setText(totalExpenses + " / " + budget);
+
+            if(currentTravel.getTotalExpenses() > travel_user.getBudget()) {
+                ((TextView) findViewById(R.id.budget)).setTextColor(getResources().getColor(R.color.error));
+            } else {
+                ((TextView) findViewById(R.id.budget)).setTextColor(getResources().getColor(R.color.dark_blue));
+            }
+
+        } else {
+            ((TextView) findViewById(R.id.budget)).setText(totalExpenses);
+        }
+
+
+    }
+
+    public void goBack(View view) {
+        view.setBackgroundColor(getResources().getColor(R.color.light_green));
         Intent intent = new Intent(this, TravelIndexActivity.class);
         startActivity(intent);
         finish();
     }
 
-    public void addExpense(View view) {
-        ((ImageButton) view).setBackgroundColor(getResources().getColor(R.color.light_green));
-        Intent i = new Intent(this, CategoriesActivity.class);
-        i.putExtra("travelId", currentTravel.getId().toString());
-        startActivity(i);
-    }
-
     public void viewGraph(View view) {
-        ((ImageButton) view).setBackgroundColor(getResources().getColor(R.color.light_green));
+        view.setBackgroundColor(getResources().getColor(R.color.light_green));
         Intent intent = new Intent(this, ExpensesGraphActivity.class);
         intent.putExtra("travelId", currentTravel.getId().toString());
         startActivity(intent);
     }
 
-    @Override
-    public void onStop() {
-        ((ImageButton) findViewById(R.id.back)).setBackgroundColor(getResources().getColor(R.color.dark_blue));
-        ((ImageButton) findViewById(R.id.view_graph)).setBackgroundColor(getResources().getColor(R.color.dark_blue));
-        ((ImageButton) findViewById(R.id.add_expense)).setBackgroundColor(getResources().getColor(R.color.dark_blue));
-
-        super.onStop();
+    public void addExpense(View view) {
+        view.setBackgroundColor(getResources().getColor(R.color.light_green));
+        Intent intent = new Intent(this, CategoriesActivity.class);
+        intent.putExtra("travelId", currentTravel.getId().toString());
+        startActivity(intent);
     }
 
-    public void remove(View view) {
-        LinearLayout expenseList = (LinearLayout) findViewById(R.id.expenses_list);
-        expenseList.removeView( expenseField );
-
-        expenseToRemove.delete();
-        warning.setVisibility(View.GONE);
-
-    }
-
-    public void cancel(View view) {
-        expenseToRemove = null;
-        warning.setVisibility(View.GONE);
-    }
-
-    public void askConfirmation(View view) {
+    public void removeExpense(View view) {
         warning.setVisibility(View.VISIBLE);
-
         expenseField = (LinearLayout) ((ImageView) view).getParent();
         long expenseId = Long.valueOf(expenseField.getTag().toString());
         expenseToRemove = Expense.findById(Expense.class, expenseId);
+    }
 
+    public void confirmRemoval(View view) {
+        LinearLayout expenseList = (LinearLayout) findViewById(R.id.expenses_list);
+        expenseList.removeView( expenseField );
+        expenseToRemove.delete();
+        warning.setVisibility(View.GONE);
+        updateExpenses();
+    }
+
+    public void cancelRemoval(View view) {
+        expenseToRemove = null;
+        warning.setVisibility(View.GONE);
     }
 }

@@ -53,6 +53,8 @@
     <string name="yes">Sim</string>
     <string name="no">Não</string>
 
+    <string name="currency">Moeda</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_travels_graph">TravelsGraphActivity</string>
     <string name="title_activity_categories">CategoriesActivity</string>

@@ -27,8 +27,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:textColor="@color/dark_blue"
-            android:paddingLeft="5dp"
-            android:text="oioioi"/>
+            android:paddingLeft="5dp"/>
 
         <TextView
             android:id="@+id/date"
@@ -38,11 +37,11 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:textColor="@color/dark_blue"
-            android:paddingLeft="5dp"
-            android:text="25/02/2015"/>
+            android:paddingLeft="5dp"/>
 
     </LinearLayout>
-    <LinearLayout
+
+    <RelativeLayout android:id="@+id/border"
         android:layout_width="2dp"
         android:layout_height="fill_parent"
         android:background="@color/dark_blue"/>
@@ -65,7 +64,7 @@
         android:padding="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:onClick="askConfirmation"
+        android:onClick="removeExpense"
         android:layout_height="fill_parent" />
 
 

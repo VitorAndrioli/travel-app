@@ -31,13 +31,16 @@ public class TravelIndexActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travel_index);
 
+        findViewById(R.id.back).setVisibility(View.GONE);
+
+
         SharedPreferences shared_preferences = getSharedPreferences("USER_DATA", 0);
         long userId = shared_preferences.getLong("userId", 0);
         User user = User.findById(User.class, userId);
 
         warning = (RelativeLayout) findViewById(R.id.warning);
 
-        List<TravelUser> travels = user.getTravels();
+        List<Travel> travels = user.getTravels();
 
         LinearLayout travelsList = (LinearLayout) findViewById(R.id.travel_list);
 
@@ -46,7 +49,7 @@ public class TravelIndexActivity extends Activity {
 
         for (int i=0; i< travels.size(); i++) {
 
-            Travel travel = travels.get(i).getTravel();
+            Travel travel = travels.get(i);
             row = inflater.inflate(R.layout.travel, null);
             row.setTag(travel.getId());
 
@@ -116,33 +119,24 @@ public class TravelIndexActivity extends Activity {
     }
 
     public void openTravel(View view) {
-        LinearLayout nameContainerParent = (LinearLayout) ((RelativeLayout) view).getChildAt(1);
-        LinearLayout nameContainer = (LinearLayout) nameContainerParent.getChildAt(2);
-
-        String travelName = ((TextView) nameContainer.getChildAt(0)).getText().toString();
-
-        Travel travel = Travel.find(Travel.class, "name = ?", travelName).get(0);
+        long travelId = Long.valueOf( view.getTag().toString() );
+        Travel travel = Travel.findById(Travel.class, travelId);
         Intent intent = new Intent(this, TravelActivity.class);
         intent.putExtra("travelId", travel.getId().toString());
         startActivity(intent);
 
     }
 
-    public void addTravel(View view) {
-        view.setBackgroundColor(getResources().getColor(R.color.light_green));
-        Intent intent = new Intent(this, NewTravelActivity.class);
-        startActivity(intent);
+    public void removeTravel(View view) {
+        warning.setVisibility(View.VISIBLE);
+
+        travelField = (RelativeLayout) ((ImageView) view).getParent().getParent();
+        long travelId = Long.valueOf(travelField.getTag().toString() );
+        travelToRemove = Travel.findById(Travel.class, travelId);
 
     }
 
-    public void viewGraph(View view) {
-        view.setBackgroundColor(getResources().getColor(R.color.light_green));
-        Intent intent = new Intent(this, TravelsGraphActivity.class);
-        startActivity(intent);
-
-    }
-
-    public void remove(View view) {
+    public void confirmRemoval(View view) {
 
         LinearLayout travelList = (LinearLayout) findViewById(R.id.travel_list);
         travelList.removeView( travelField );
@@ -152,18 +146,9 @@ public class TravelIndexActivity extends Activity {
 
     }
 
-    public void cancel(View view) {
+    public void cancelRemoval(View view) {
         travelToRemove = null;
         warning.setVisibility(View.GONE);
-    }
-
-    public void askConfirmation(View view) {
-        warning.setVisibility(View.VISIBLE);
-
-        travelField = (RelativeLayout) ((ImageView) view).getParent().getParent();
-        long travelId = Long.valueOf(travelField.getTag().toString() );
-        travelToRemove = Travel.findById(Travel.class, travelId);
-
     }
 
     @Override

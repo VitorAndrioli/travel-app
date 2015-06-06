@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/white"
     android:orientation="vertical"
     android:animateLayoutChanges="true"
     tools:context="com.traveltrack.vitor.travelapp.TravelIndexActivity">
@@ -105,56 +105,12 @@
         android:layout_height="wrap_content"
         tools:layout="@layout/fragment_header" />
 
-    <LinearLayout android:id="@+id/footer"
+    <fragment android:id="@+id/footer"
+        android:name="com.traveltrack.vitor.travelapp.TravelFooterFragment"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/footer_height"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-
-        <ImageButton android:id="@+id/back"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="fill_parent"
-            android:src="@drawable/back_icon"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:scaleType="centerInside"
-            android:background="@color/dark_blue"
-            android:onClick="goBack"/>
-
-        <RelativeLayout
-            android:layout_width="2dp"
-            android:layout_height="fill_parent"
-            android:background="@color/white"/>
-
-        <ImageButton android:id="@+id/view_graph"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="fill_parent"
-            android:src="@drawable/pie_graph_icon"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:scaleType="centerInside"
-            android:background="@color/dark_blue"
-            android:onClick="viewGraph"/>
-
-        <RelativeLayout
-            android:layout_width="2dp"
-            android:layout_height="fill_parent"
-            android:background="@color/white"/>
-
-        <ImageButton android:id="@+id/add_expense"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="fill_parent"
-            android:src="@drawable/add_expense"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:scaleType="centerInside"
-            android:background="@color/dark_blue"
-            android:onClick="addExpense"/>
-
-    </LinearLayout>
+        android:layout_height="@dimen/footer_height"
+        tools:layout="@layout/fragment_travel_footer" />
 
     <RelativeLayout android:id="@+id/warning"
         android:layout_width="fill_parent"
@@ -200,7 +156,7 @@
                     android:text="@string/yes"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:onClick="remove"
+                    android:onClick="confirmRemoval"
                     android:textColor="@color/dark_blue"
                     android:background="@drawable/light_green_background"/>
 
@@ -216,7 +172,7 @@
                     android:text="@string/no"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:onClick="cancel"
+                    android:onClick="cancelRemoval"
                     android:textColor="@color/dark_blue"
                     android:background="@drawable/light_green_background"/>
 

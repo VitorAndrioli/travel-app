@@ -29,7 +29,7 @@ public class Travel extends SugarRecord<Travel> {
     }
 
     public List<Expense> getExpenses() {
-        List<Expense> expenses = Expense.find(Expense.class, "travel = ?", this.getId().toString());
+        List<Expense> expenses = Expense.find(Expense.class, "travel = ? ORDER BY date DESC", this.getId().toString());
 
         return expenses;
     }
