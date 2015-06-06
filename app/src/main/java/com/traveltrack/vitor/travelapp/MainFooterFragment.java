@@ -58,4 +58,12 @@ public class MainFooterFragment extends Fragment {
         startActivity(intent);
     }
 
+    @Override
+    public void onStop() {
+        ((ImageButton) getActivity().findViewById(R.id.back)).setBackgroundColor(getResources().getColor(R.color.dark_blue));
+        ((ImageButton) getActivity().findViewById(R.id.view_graph)).setBackgroundColor(getResources().getColor(R.color.dark_blue));
+        ((ImageButton) getActivity().findViewById(R.id.add_travel)).setBackgroundColor(getResources().getColor(R.color.dark_blue));
+
+        super.onStop();
+    }
 }

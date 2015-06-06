@@ -35,9 +35,6 @@ public class NewExpenseActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_expense);
 
-        findViewById(R.id.add_expense).setBackgroundColor(getResources().getColor(R.color.light_green));
-        findViewById(R.id.add_expense).setClickable(false);
-
         Intent intent = getIntent();
         int travelId = Integer.parseInt(intent.getStringExtra("travelId"));
         String categoryName = intent.getStringExtra("categoryName");
@@ -113,6 +110,9 @@ public class NewExpenseActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-
-
+    public void onStart() {
+        super.onStart();
+        findViewById(R.id.add_expense).setBackgroundColor(getResources().getColor(R.color.light_green));
+        findViewById(R.id.add_expense).setClickable(false);
+    }
 }

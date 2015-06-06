@@ -98,7 +98,7 @@ public class TravelActivity extends Activity {
     }
 
     public void updateExpenses() {
-        DecimalFormat df = new DecimalFormat("#,###.00");
+        DecimalFormat df = new DecimalFormat("#,##0.00");
         String totalExpenses = currentTravel.getCurrency().getSymbol() + " " + df.format(currentTravel.getTotalExpenses());
 
         if (travel_user.getBudget() > 0) {

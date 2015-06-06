@@ -15,9 +15,6 @@ public class CategoriesActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
-        findViewById(R.id.add_expense).setBackgroundColor(getResources().getColor(R.color.light_green));
-        findViewById(R.id.add_expense).setClickable(false);
-
         Intent intent = getIntent();
         int travelId = Integer.parseInt(intent.getStringExtra("travelId"));
         currentTravel = Travel.findById(Travel.class, travelId);
@@ -48,6 +45,10 @@ public class CategoriesActivity extends Activity {
         startActivity(intent);
     }
 
-
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        findViewById(R.id.add_expense).setBackgroundColor(getResources().getColor(R.color.light_green));
+        findViewById(R.id.add_expense).setClickable(false);
+    }
 }

@@ -28,9 +28,6 @@ public class ExpensesGraphActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expenses_graph);
 
-        findViewById(R.id.view_graph).setBackgroundColor(getResources().getColor(R.color.light_green));
-        findViewById(R.id.view_graph).setClickable(false);
-
         Intent intent = getIntent();
         int travelId = Integer.parseInt(intent.getStringExtra("travelId"));
 
@@ -109,4 +106,10 @@ public class ExpensesGraphActivity extends Activity {
         finish();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        findViewById(R.id.view_graph).setBackgroundColor(getResources().getColor(R.color.light_green));
+        findViewById(R.id.view_graph).setClickable(false);
+    }
 }

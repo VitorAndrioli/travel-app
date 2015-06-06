@@ -32,7 +32,4 @@ public class TravelFooterFragment extends Fragment {
 
         super.onStop();
     }
-
-
-
 }

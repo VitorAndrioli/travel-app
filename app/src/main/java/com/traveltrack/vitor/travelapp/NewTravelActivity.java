@@ -53,14 +53,11 @@ public class NewTravelActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_travel);
 
-        findViewById(R.id.add_travel).setBackgroundColor(getResources().getColor(R.color.light_green));
-        findViewById(R.id.add_travel).setClickable(false);
-
         SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);
         long userId = sharedPreferences.getLong("userId", 0);
         user = User.findById(User.class, userId);
 
-
+        currency = Currency.find(Currency.class, "code = ?", "BRL").get(0);
     }
 
     public void selectCurrency(View view) {
@@ -244,5 +241,11 @@ public class NewTravelActivity extends Activity {
         Intent intent = new Intent(this, TravelIndexActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void onStart() {
+        super.onStart();
+        findViewById(R.id.add_travel).setBackgroundColor(getResources().getColor(R.color.light_green));
+        findViewById(R.id.add_travel).setClickable(false);
     }
 }

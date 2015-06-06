@@ -29,7 +29,7 @@ public class Expense extends SugarRecord<Expense> {
 
     @Override
     public String toString() {
-        DecimalFormat df = new DecimalFormat("#,###.00");
+        DecimalFormat df = new DecimalFormat("#,##0.00");
         return this.getTravel().getCurrency().getSymbol() + " " + df.format( this.getValue() );
     }
 

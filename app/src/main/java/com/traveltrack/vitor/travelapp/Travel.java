@@ -52,17 +52,7 @@ public class Travel extends SugarRecord<Travel> {
         return users;
     }
 
-    public double getTotalSpent() {
-        double total = 0;
-        List<Expense> expenses = Expense.find(Expense.class, "travel = ?", this.getId().toString());
-
-        for (int i=0; i<expenses.size(); i++)
-            total += expenses.get(i).getValue();
-
-        return total;
-    }
-
-    public double getTotalSpentByCategory(Category category) {
+    public double getTotalExpensesByCategory(Category category) {
         double category_total = 0;
         List<Expense> expenses = Expense.find(Expense.class, "travel = ? and category = ?", this.getId().toString(), category.getId().toString());
 
