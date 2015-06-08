@@ -37,13 +37,17 @@ import java.util.Locale;
 import static android.net.Uri.fromFile;
 
 
-public class NewTravelActivity extends Activity {
+public class EditTravelActivity extends Activity {
     private User user;
     private Travel travel;
     private Uri selectedImageUri;
-    private Date beginning;
+    private Date start;
     private Date end;
     private Currency currency;
+    private String name;
+    private TravelUser travelUser;
+    private double budget;
+
 
     private Calendar myCalendar;
     private DatePickerDialog.OnDateSetListener date;
@@ -58,7 +62,34 @@ public class NewTravelActivity extends Activity {
         long userId = sharedPreferences.getLong("userId", 0);
         user = User.findById(User.class, userId);
 
-        currency = Currency.find(Currency.class, "code = ?", "BRL").get(0);
+        Intent intent = getIntent();
+        int travelId = Integer.parseInt( intent.getStringExtra("travelId") );
+        travel = Travel.findById(Travel.class, travelId);
+
+        travelUser = TravelUser.find(TravelUser.class, "user = ? and travel = ?", user.getId().toString(), travel.getId().toString()).get(0);
+
+        name = travel.getName();
+        budget = travelUser.getBudget();
+        start = travel.getStart();
+        end = travel.getEnd();
+        currency = travel.getCurrency();
+        selectedImageUri =  ( selectedImageUri == null ) ? null : Uri.parse( travel.getImageURI() );
+
+        if ( !name.isEmpty() )
+            ((EditText) findViewById(R.id.travel_name)).setText( name );
+
+        ((EditText) findViewById(R.id.budget)).setText( String.valueOf( budget ) );
+
+        ((TextView) findViewById(R.id.currency)).setText( currency.getCode() );
+
+        if (start != null)
+            ((TextView) findViewById(R.id.beginning)).setText( (sdf.format(start)) );
+
+        if (end != null)
+            ((TextView) findViewById(R.id.end)).setText( (sdf.format(end)) );
+
+        if (selectedImageUri != null)
+            ((ImageView) findViewById(R.id.picture)).setImageURI(selectedImageUri);
 
         ((Button) findViewById(R.id.submit)).setText(getResources().getString(R.string.update));
     }
@@ -89,7 +120,7 @@ public class NewTravelActivity extends Activity {
     }
 
     public void submit(View view) {
-        String name = ((EditText) findViewById(R.id.travel_name)).getText().toString();
+        name = ((EditText) findViewById(R.id.travel_name)).getText().toString();
         if (name.isEmpty()) {
             return;
         }
@@ -97,20 +128,16 @@ public class NewTravelActivity extends Activity {
         String budgetText = ((EditText) findViewById(R.id.budget)).getText().toString();
         double budget = budgetText.isEmpty() ? 0 : Double.parseDouble(budgetText);
 
-        travel = new Travel(name,
+        travel.update(name,
                 selectedImageUri == null ? null : selectedImageUri.toString(),
-                beginning,
+                start,
                 end,
                 currency);
 
-        travel.save();
-
-        TravelUser travel_user = new TravelUser(travel, user, budget);
-        travel_user.save();
-
-        Intent i = new Intent(NewTravelActivity.this, TravelIndexActivity.class);
-        startActivity(i);
-
+        Intent intent = new Intent(EditTravelActivity.this, TravelActivity.class);
+        intent.putExtra("travelId", travel.getId().toString());
+        startActivity(intent);
+        finish();
     }
 
     public void getDate(final View view) {
@@ -130,7 +157,7 @@ public class NewTravelActivity extends Activity {
 
         };
 
-        new DatePickerDialog(NewTravelActivity.this, date,
+        new DatePickerDialog(EditTravelActivity.this, date,
                 myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
@@ -141,7 +168,7 @@ public class NewTravelActivity extends Activity {
         dateView.setText(sdf.format(date));
 
         if (dateView.getId() == R.id.beginning)
-            beginning = date;
+            start = date;
         else
             end = date;
     }
@@ -149,6 +176,7 @@ public class NewTravelActivity extends Activity {
     public void addPicture(View v) {
         openImageIntent();
     }
+
 
     static final int SELECT_PICTURE = 1;
     private Uri outputFileUri;
@@ -162,7 +190,7 @@ public class NewTravelActivity extends Activity {
 
         // Camera.
         final List<Intent> cameraIntents = new ArrayList<Intent>();
-        final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        final Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         final PackageManager packageManager = getPackageManager();
         final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
 
@@ -176,7 +204,7 @@ public class NewTravelActivity extends Activity {
         }
 
         // Filesystem.
-        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         pickIntent.setType("image/*");
 
         Intent chooserIntent = Intent.createChooser(pickIntent, "Select Image");
@@ -200,7 +228,7 @@ public class NewTravelActivity extends Activity {
                     if (action == null) {
                         isCamera = false;
                     } else {
-                        isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        isCamera = action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
                     }
                 }
 
@@ -239,7 +267,8 @@ public class NewTravelActivity extends Activity {
 
     public void goBack(View view) {
         view.setBackgroundColor(getResources().getColor(R.color.light_green));
-        Intent intent = new Intent(this, TravelIndexActivity.class);
+        Intent intent = new Intent(this, TravelActivity.class);
+        intent.putExtra("travelId", travel.getId().toString());
         startActivity(intent);
         finish();
     }

@@ -53,7 +53,8 @@ public class TravelActivity extends Activity {
 
         if (currentTravel.getStart() != null && currentTravel.getEnd() != null)
             ((TextView) findViewById(R.id.date)).setText(sdf.format(currentTravel.getStart()) + " - " + sdf.format(currentTravel.getEnd()));
-
+        else
+            ((TextView) findViewById(R.id.date)).setVisibility(View.GONE);
 
         if (currentTravel.getImageURI() != null)
             ((ImageView) findViewById(R.id.picture)).setImageURI(parse(currentTravel.getImageURI()));
@@ -118,6 +119,12 @@ public class TravelActivity extends Activity {
 
     }
 
+    public void editTravel(View view) {
+        Intent intent = new Intent(this, EditTravelActivity.class);
+        intent.putExtra("travelId", currentTravel.getId().toString());
+        startActivity( intent );
+    }
+
     public void goBack(View view) {
         view.setBackgroundColor(getResources().getColor(R.color.light_green));
         Intent intent = new Intent(this, TravelIndexActivity.class);
@@ -136,6 +143,14 @@ public class TravelActivity extends Activity {
         view.setBackgroundColor(getResources().getColor(R.color.light_green));
         Intent intent = new Intent(this, CategoriesActivity.class);
         intent.putExtra("travelId", currentTravel.getId().toString());
+        startActivity(intent);
+    }
+
+    public void editExpense(View view) {
+        expenseField = (LinearLayout) view;
+        String expenseId = expenseField.getTag().toString();
+        Intent intent = new Intent(this, EditExpenseActivity.class);
+        intent.putExtra("expenseId", expenseId);
         startActivity(intent);
     }
 

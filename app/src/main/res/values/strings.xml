@@ -31,6 +31,7 @@
     <string name="end">Fim</string>
 
     <string name="create">Criar</string>
+    <string name="update">Atualizar</string>
     <string name="add_travel">Adicionar viagem</string>
 
     <string name="description">Descrição</string>
@@ -59,5 +60,7 @@
     <string name="title_activity_travels_graph">TravelsGraphActivity</string>
     <string name="title_activity_categories">CategoriesActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_edit_travel">EditTravelActivity</string>
+    <string name="title_activity_edit_expense">EditExpenseActivity</string>
 
 </resources>

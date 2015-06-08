@@ -1,5 +1,7 @@
 package com.traveltrack.vitor.travelapp;
 
+import android.util.Log;
+
 import com.orm.SugarRecord;
 
 import java.util.Date;
@@ -26,6 +28,16 @@ public class Travel extends SugarRecord<Travel> {
         this.setName(name);
         this.setStart(start);
         this.setEnd(end);
+    }
+
+    public void update(String name, String imageURI, Date start, Date end, Currency currency) {
+        this.setName(name);
+        this.setImageURI(imageURI);
+        this.setStart(start);
+        this.setEnd(end);
+        this.setCurrency(currency);
+
+        this.save();
     }
 
     public List<Expense> getExpenses() {
@@ -80,6 +92,19 @@ public class Travel extends SugarRecord<Travel> {
         }
 
         super.delete();
+    }
+
+    @Override
+    public long save() {
+
+        int travelsWithSameName = Travel.find(Travel.class, "name = ?", this.name).size();
+        Log.d("Debug", "---------------------------------- " + travelsWithSameName);
+
+        if (travelsWithSameName > 0) {
+            this.name = this.name + " - " + travelsWithSameName;
+        }
+
+        return super.save();
     }
 
     public void setName(String name) {

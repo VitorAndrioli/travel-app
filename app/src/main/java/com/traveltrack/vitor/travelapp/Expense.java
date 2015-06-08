@@ -18,13 +18,24 @@ public class Expense extends SugarRecord<Expense> {
 
     }
 
-    public Expense (double value, String description, Category category, User user, Travel travel, Date date) {
+    public Expense(double value, String description, Category category, User user, Travel travel, Date date) {
         this.setValue(value);
         this.setDescription(description);
         this.setDate(date);
         this.setCategory(category);
         this.setUser(user);
         this.setTravel(travel);
+    }
+
+    public void update(double value, String description, Category category, User user, Travel travel, Date date) {
+        this.setValue(value);
+        this.setDescription(description);
+        this.setDate(date);
+        this.setCategory(category);
+        this.setUser(user);
+        this.setTravel(travel);
+
+        super.save();
     }
 
     @Override

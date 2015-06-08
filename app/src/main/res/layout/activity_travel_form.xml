@@ -177,15 +177,14 @@
 
                 </LinearLayout>
                 
-                <Button
+                <Button android:id="@+id/submit"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/light_green_background"
                     android:textColor="@color/dark_blue"
                     android:stateListAnimator="@null"
                     android:layout_marginTop="15dp"
-                    android:text="@string/create"
-                    android:onClick="create"/>
+                    android:onClick="submit"/>
 
             </LinearLayout>
 
