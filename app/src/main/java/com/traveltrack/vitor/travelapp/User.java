@@ -9,6 +9,8 @@ public class User extends SugarRecord<User> {
     private String email;
     private String password;
 
+    private Currency defaultCurrency;
+
     public User() {}
 
     public User(String name, String email, String password) {
@@ -16,6 +18,7 @@ public class User extends SugarRecord<User> {
         this.setEmail(email);
         this.setPassword(password);
     }
+
 
     public List<Travel> getTravels() {
         List<Travel> travels = Travel.findWithQuery(
@@ -48,5 +51,13 @@ public class User extends SugarRecord<User> {
 
     public String getPassword() {
         return this.password;
+    }
+
+    public void setDefaultCurrency(Currency currency) {
+        this.defaultCurrency = currency;
+    }
+
+    public Currency getDefaultCurrency() {
+        return this.defaultCurrency;
     }
 }

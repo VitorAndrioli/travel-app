@@ -20,26 +20,27 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-
         if (!checkDataBase()) {
             DatabaseCreator dbCreator = new DatabaseCreator();
             dbCreator.createDatabase(this);
         }
 
-        SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);
-        long userId = sharedPreferences.getLong("userId", 0);
-        final User user = User.findById(User.class, userId);
-
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Intent i = new Intent(SplashActivity.this, LoginActivity.class);
 
-                if (user != null)
-                    i = new Intent(SplashActivity.this, TravelIndexActivity.class);
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
 
-                startActivity(i);
+                SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);
+                long userId = sharedPreferences.getLong("userId", -1);
+                User user = User.findById(User.class, userId);
+
+                if (user != null) {
+                    intent = new Intent(SplashActivity.this, TravelIndexActivity.class);
+                }
+
+                startActivity(intent);
                 finish();
 
             }

@@ -12,6 +12,9 @@
 
     <string name="email">E-mail</string>
     <string name="password">Senha</string>
+    <string name="password_confirmation">Confirme sua senha</string>
+    <string name="current_password">Senha atual</string>
+    <string name="new_password">Nova senha</string>
     <string name="login_error">E-mail ou senha inválidos</string>
     <string name="enter">Entrar</string>
     <string name="register">Cadastre-se</string>
@@ -19,7 +22,6 @@
     <string name="name">Nome</string>
     <string name="send">Enviar</string>
     <string name="cancel">Cancelar</string>
-    <string name="password_confirmation">Confirme sua senha</string>
     <string name="password_error">Senhas não conferem</string>
 
     <string name="profile">Perfil</string>
@@ -55,6 +57,7 @@
     <string name="no">Não</string>
 
     <string name="currency">Moeda</string>
+    <string name="default_currency">moeda padrão</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_travels_graph">TravelsGraphActivity</string>

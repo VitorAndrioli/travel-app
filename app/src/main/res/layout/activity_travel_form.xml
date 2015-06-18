@@ -89,20 +89,34 @@
                         android:layout_weight="0.1"
                         android:layout_height="0dp"/>
 
-                    <TextView android:id="@+id/currency"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="wrap_content"
                         android:background="@drawable/light_green_background"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
-                        android:textSize="20dp"
-                        android:gravity="center"
-                        android:paddingLeft="7dp"
-                        android:textColor="@color/dark_blue"
-                        android:text="@string/currency"
-                        android:spinnerMode="dialog"
-                        android:onClick="selectCurrency"/>
+                        android:onClick="selectCurrency"
+                        android:layout_height="fill_parent"
+                        android:paddingBottom="7dp"
+                        android:paddingTop="7dp"
+                        android:paddingLeft="7dp">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.3"
+                            android:layout_height="fill_parent"
+                            android:src="@drawable/currency_icon"/>
+
+                        <TextView android:id="@+id/currency"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.7"
+                            android:layout_height="wrap_content"
+                            android:textSize="20dp"
+                            android:layout_gravity="center"
+                            android:paddingLeft="7dp"
+                            android:textColor="@color/dark_blue"
+                            android:text="@string/end" />
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 

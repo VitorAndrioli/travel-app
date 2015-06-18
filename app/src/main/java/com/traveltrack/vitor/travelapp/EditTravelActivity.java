@@ -132,7 +132,7 @@ public class EditTravelActivity extends Activity {
                 selectedImageUri == null ? null : selectedImageUri.toString(),
                 start,
                 end,
-                currency);
+                currency, 1);
 
         Intent intent = new Intent(EditTravelActivity.this, TravelActivity.class);
         intent.putExtra("travelId", travel.getId().toString());

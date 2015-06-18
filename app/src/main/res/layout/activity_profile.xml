@@ -1,13 +1,189 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
     android:background="@color/white"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.traveltrack.vitor.travelapp.ProfileActivity">
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    tools:context="com.traveltrack.vitor.travelapp.TravelIndexActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="@dimen/header_height"
+        android:layout_above="@+id/footer"
+        android:isScrollContainer="true">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:onClick="changePicture">
+
+                    <ImageView android:id="@+id/picture"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="70dp"
+                        android:background="@color/gray"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/default_profile_picture"/>
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_weight="5"
+                        android:layout_height="70dp"
+                        android:background="@drawable/light_green_background"
+                        android:textColor="@color/dark_blue"
+                        android:stateListAnimator="@null"
+                        android:text="@string/choose_picture"/>
+
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/focus_holder" android:orientation="vertical"
+                    android:focusable="true" android:focusableInTouchMode="true"
+                    android:layout_width="0px" android:layout_height="0px"/>
+
+                <EditText android:id="@+id/user_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/name"
+                    android:background="@drawable/light_green_border"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/dark_blue"
+                    android:paddingBottom="@dimen/input_text_vertical_padding"
+                    android:paddingTop="@dimen/input_text_vertical_padding"
+                    android:paddingLeft="@dimen/input_text_horizontal_padding"
+                    android:paddingRight="@dimen/input_text_horizontal_padding"
+                    android:layout_marginTop="10dp"
+                    android:inputType="text"/>
+
+                <EditText android:id="@+id/email"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email"
+                    android:background="@drawable/light_green_border"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/dark_blue"
+                    android:paddingBottom="@dimen/input_text_vertical_padding"
+                    android:paddingTop="@dimen/input_text_vertical_padding"
+                    android:paddingLeft="@dimen/input_text_horizontal_padding"
+                    android:paddingRight="@dimen/input_text_horizontal_padding"
+                    android:layout_marginTop="10dp"
+                    android:inputType="textEmailAddress"/>
+
+                <EditText android:id="@+id/current_password"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/current_password"
+                    android:background="@drawable/light_green_border"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/dark_blue"
+                    android:paddingBottom="@dimen/input_text_vertical_padding"
+                    android:paddingTop="@dimen/input_text_vertical_padding"
+                    android:paddingLeft="@dimen/input_text_horizontal_padding"
+                    android:paddingRight="@dimen/input_text_horizontal_padding"
+                    android:layout_marginTop="10dp"
+                    android:inputType="text"/>
+
+                <EditText android:id="@+id/password"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/new_password"
+                    android:background="@drawable/light_green_border"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/dark_blue"
+                    android:paddingBottom="@dimen/input_text_vertical_padding"
+                    android:paddingTop="@dimen/input_text_vertical_padding"
+                    android:paddingLeft="@dimen/input_text_horizontal_padding"
+                    android:paddingRight="@dimen/input_text_horizontal_padding"
+                    android:layout_marginTop="10dp"
+                    android:inputType="text"/>
+
+                <EditText android:id="@+id/password_confirmation"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/password_confirmation"
+                    android:background="@drawable/light_green_border"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/dark_blue"
+                    android:paddingBottom="@dimen/input_text_vertical_padding"
+                    android:paddingTop="@dimen/input_text_vertical_padding"
+                    android:paddingLeft="@dimen/input_text_horizontal_padding"
+                    android:paddingRight="@dimen/input_text_horizontal_padding"
+                    android:layout_marginTop="10dp"
+                    android:inputType="text"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/light_green_background"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:onClick="selectCurrency"
+                    android:paddingBottom="7dp"
+                    android:paddingTop="7dp"
+                    android:paddingLeft="7dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:layout_height="fill_parent"
+                        android:src="@drawable/currency_icon"/>
+
+                    <TextView android:id="@+id/currency"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:layout_gravity="center"
+                        android:paddingLeft="7dp"
+                        android:textColor="@color/dark_blue"
+                        android:text="@string/end" />
+
+                </LinearLayout>
+
+                <Button android:id="@+id/submit"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/light_green_background"
+                    android:textColor="@color/dark_blue"
+                    android:text="@string/update"
+                    android:stateListAnimator="@null"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:onClick="submit"/>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <fragment android:id="@+id/header"
+        android:name="com.traveltrack.vitor.travelapp.HeaderFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_header" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/footer_height"
+        android:background="@color/dark_blue"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:onClick="goBack">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_icon"
+            android:padding="8dp"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -13,29 +13,26 @@ public class Travel extends SugarRecord<Travel> {
     private Date end;
     private String imageURI;
     private Currency currency;
+    private float exchangeRate;
 
     public Travel() {}
 
-    public Travel(String name, String imageURI, Date start, Date end, Currency currency) {
+    public Travel(String name, String imageURI, Date start, Date end, Currency currency, float exchangeRate) {
         this.setName(name);
         this.setImageURI(imageURI);
         this.setStart(start);
         this.setEnd(end);
         this.setCurrency(currency);
+        this.setExchangeRate(exchangeRate);
     }
 
-    public Travel(String name, Date start, Date end) {
-        this.setName(name);
-        this.setStart(start);
-        this.setEnd(end);
-    }
-
-    public void update(String name, String imageURI, Date start, Date end, Currency currency) {
+    public void update(String name, String imageURI, Date start, Date end, Currency currency, float exchangeRate) {
         this.setName(name);
         this.setImageURI(imageURI);
         this.setStart(start);
         this.setEnd(end);
         this.setCurrency(currency);
+        this.setExchangeRate(exchangeRate);
 
         this.save();
     }
@@ -58,6 +55,10 @@ public class Travel extends SugarRecord<Travel> {
         return total;
     }
 
+    public double getTotalExpensesInDefaultCurrency() {
+        return this.getTotalExpenses() * this.exchangeRate;
+    }
+
     public List<TravelUser> getParticipants() {
         List<TravelUser> users = TravelUser.find(TravelUser.class, "travel = ?", this.getId().toString());
 
@@ -72,6 +73,10 @@ public class Travel extends SugarRecord<Travel> {
             category_total += expenses.get(i).getValue();
 
         return category_total;
+    }
+
+    public double getTotalExpensesByCategoryInDefaultCurrency(Category category) {
+        return this.getTotalExpensesByCategory(category) * this.exchangeRate;
     }
 
     @Override
@@ -145,6 +150,17 @@ public class Travel extends SugarRecord<Travel> {
 
     public Currency getCurrency() {
         return this.currency;
+    }
+
+    public void setExchangeRate(float rate) {
+        if (rate <= 0)
+            this.exchangeRate = 1;
+        else
+            this.exchangeRate = rate;
+    }
+
+    public float getExchangeRate() {
+        return this.exchangeRate;
     }
 
 }

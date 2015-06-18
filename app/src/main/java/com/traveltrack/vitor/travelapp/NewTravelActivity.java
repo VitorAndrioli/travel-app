@@ -60,7 +60,7 @@ public class NewTravelActivity extends Activity {
 
         currency = Currency.find(Currency.class, "code = ?", "BRL").get(0);
 
-        ((Button) findViewById(R.id.submit)).setText(getResources().getString(R.string.update));
+        ((Button) findViewById(R.id.submit)).setText(getResources().getString(R.string.create));
     }
 
     public void selectCurrency(View view) {
@@ -101,7 +101,7 @@ public class NewTravelActivity extends Activity {
                 selectedImageUri == null ? null : selectedImageUri.toString(),
                 beginning,
                 end,
-                currency);
+                currency, 1);
 
         travel.save();
 
