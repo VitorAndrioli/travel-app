@@ -1,10 +1,9 @@
-package com.traveltrack.vitor.travelapp;
+package com.traveltrack.vitor.orcamentour;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -21,10 +20,14 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class NewExpenseActivity extends Activity {
-    Travel currentTravel;
-    Category category;
-    Date expenseDate;
+public class EditExpenseActivity extends Activity {
+    private Expense expense;
+    private Travel currentTravel;
+    private Category category;
+    private User user;
+    private Date expenseDate;
+    private double value;
+    private String description;
 
     private Calendar myCalendar;
     private DatePickerDialog.OnDateSetListener date;
@@ -37,38 +40,41 @@ public class NewExpenseActivity extends Activity {
         setContentView(R.layout.activity_expense_form);
 
         Intent intent = getIntent();
-        int travelId = Integer.parseInt(intent.getStringExtra("travelId"));
-        String categoryName = intent.getStringExtra("categoryName");
-        category = Category.find(Category.class, "name = ?", categoryName).get(0);
+        int expenseId = Integer.parseInt(intent.getStringExtra("expenseId"));
+        expense = Expense.findById(Expense.class, expenseId);
 
-        currentTravel = Travel.findById(Travel.class, travelId);
+        currentTravel = expense.getTravel();
+        category = expense.getCategory();
+        user = expense.getUser();
 
-        expenseDate = new Date();
+        value = expense.getValue();
+        expenseDate = expense.getDate();
+        description = expense.getDescription();
+
+        if (value > 0)
+            ((EditText) findViewById(R.id.value)).setText( String.valueOf( value ) );
         ((TextView) findViewById(R.id.date)).setText(sdf.format(expenseDate));
-        Uri imageUri = Uri.parse("android.resource://com.traveltrack.vitor.travelapp/drawable/" + categoryName + "_big");
+        ((EditText) findViewById(R.id.description)).setText( description );
+
+        Uri imageUri = Uri.parse("android.resource://com.traveltrack.vitor.travelapp/drawable/" + category.getName() + "_big");
         ((ImageView) findViewById(R.id.picture)).setImageURI(imageUri);
 
-        ((Button) findViewById(R.id.submit)).setText(getResources().getString(R.string.create));
+        ((Button) findViewById(R.id.submit)).setText(getResources().getString(R.string.update));
 
     }
 
     public void submit(View view) {
         String valueField = ((EditText) findViewById(R.id.value)).getText().toString();
-        double value = valueField.isEmpty() ? 0 : Double.parseDouble(valueField);
+        value = valueField.isEmpty() ? 0 : Double.parseDouble(valueField);
 
-        String description = ((EditText) findViewById(R.id.description)).getText().toString();
+        description = ((EditText) findViewById(R.id.description)).getText().toString();
 
-        SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", 0);
-        long userId = sharedPreferences.getLong("userId", 0);
-        User user = User.findById(User.class, userId);
-
-        Expense expense = new Expense(value, description, category, user, currentTravel, expenseDate);
-
-        expense.save();
+        expense.update(value, description, category, user, currentTravel, expenseDate);
 
         Intent intent = new Intent(this, TravelActivity.class);
         intent.putExtra("travelId", currentTravel.getId().toString());
         startActivity(intent);
+        finish();
 
     }
 
@@ -100,7 +106,7 @@ public class NewExpenseActivity extends Activity {
 
     public void goBack(View view) {
         view.setBackgroundColor(getResources().getColor(R.color.light_green));
-        Intent intent = new Intent(this, CategoriesActivity.class);
+        Intent intent = new Intent(this, TravelActivity.class);
         intent.putExtra("travelId", currentTravel.getId().toString());
         startActivity(intent);
         finish();

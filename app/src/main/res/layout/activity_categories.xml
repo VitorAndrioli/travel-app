@@ -4,7 +4,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:animateLayoutChanges="true"
-    tools:context="com.traveltrack.vitor.travelapp.TravelIndexActivity">
+    tools:context="com.traveltrack.vitor.orcamentour.TravelIndexActivity">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -116,13 +116,13 @@
     </LinearLayout>
 
     <fragment android:id="@+id/header"
-        android:name="com.traveltrack.vitor.travelapp.HeaderFragment"
+        android:name="com.traveltrack.vitor.orcamentour.HeaderFragment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         tools:layout="@layout/fragment_header" />
 
     <fragment android:id="@+id/footer"
-        android:name="com.traveltrack.vitor.travelapp.TravelFooterFragment"
+        android:name="com.traveltrack.vitor.orcamentour.TravelFooterFragment"
         android:layout_width="fill_parent"
         android:layout_alignParentBottom="true"
         android:layout_height="@dimen/footer_height"

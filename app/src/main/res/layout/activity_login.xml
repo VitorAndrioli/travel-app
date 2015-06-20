@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context="com.traveltrack.vitor.travelapp.LoginActivity">
+    tools:context="com.traveltrack.vitor.orcamentour.LoginActivity">
 
     <ScrollView
         android:layout_width="fill_parent"

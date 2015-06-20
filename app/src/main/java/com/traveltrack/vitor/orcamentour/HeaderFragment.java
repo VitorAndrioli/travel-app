@@ -1,4 +1,4 @@
-package com.traveltrack.vitor.travelapp;
+package com.traveltrack.vitor.orcamentour;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -7,13 +7,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class HeaderFragment extends Fragment {
 
-    private LinearLayout userNameContainer, userNameContainerActive, userMenu;
-    private TextView userName, userNameActive, profile, logout;
+    private LinearLayout userNameContainer;
+    private LinearLayout userNameContainerActive;
+    private LinearLayout userMenu;
+    private TextView userName;
+    private TextView userNameActive;
+    private TextView profile;
+    private TextView logout;
+    private ImageView logo;
     private User user;
 
     public HeaderFragment() {
@@ -41,7 +48,7 @@ public class HeaderFragment extends Fragment {
         userMenu = (LinearLayout) view.findViewById(R.id.user_menu);
         profile = (TextView) view.findViewById(R.id.profile);
         logout = (TextView) view.findViewById(R.id.logout);
-
+        logo = (ImageView) view.findViewById(R.id.logo);
 
         userName.setText(user.getName());
         userNameActive.setText(user.getName());
@@ -71,12 +78,32 @@ public class HeaderFragment extends Fragment {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                goToProfile();
+            }
+        });
 
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToHome();
             }
         });
 
         return view;
     }
+
+    public void goToHome() {
+        Intent intent = new Intent(getActivity(), TravelIndexActivity.class);
+        startActivity(intent);
+        getActivity().finish();
+
+    }
+
+    public void goToProfile() {
+        Intent intent = new Intent(getActivity(), ProfileActivity.class);
+        startActivity(intent);
+    }
+
 
     public void logout() {
         SharedPreferences shared_preferences = getActivity().getSharedPreferences("USER_DATA", 0);
@@ -84,8 +111,8 @@ public class HeaderFragment extends Fragment {
         editor.remove("user_id");
         editor.commit();
 
-        Intent i = new Intent(getActivity(), LoginActivity.class);
-        startActivity(i);
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
     }
 
     @Override
