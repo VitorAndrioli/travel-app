@@ -4,7 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
@@ -40,10 +45,45 @@ public class TravelsGraphActivity extends Activity {
 
         mChart.animateY(1000, Easing.EasingOption.EaseInOutQuad);
 
-        Legend l = mChart.getLegend();
-        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+        setLegend();
 
     }
+
+    public void setLegend() {
+
+        Legend legend = mChart.getLegend();
+        legend.setEnabled(false);
+
+        int colorCodes[] = legend.getColors();
+
+        LinearLayout legendContainer = (LinearLayout) findViewById(R.id.legend_container);
+        View row = null;
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        for (int i=0; i<colorCodes.length-1; i++) {
+            if (i%2 == 0) {
+                row = inflater.inflate(R.layout.legend_row, null);
+            }
+
+            View legendField = inflater.inflate(R.layout.legend, null);
+
+            TableRow.LayoutParams lp = new TableRow.LayoutParams(0, TableLayout.LayoutParams.WRAP_CONTENT, 1f);
+            legendField.setLayoutParams(lp);
+
+            ((TextView) legendField.findViewById(R.id.label)).setText( legend.getLabel(i) );
+            (legendField.findViewById(R.id.color)).setBackgroundColor( colorCodes[i] );
+
+
+            ((LinearLayout) row).addView(legendField);
+
+            if (i%2 == 0) {
+                legendContainer.addView(row);
+            }
+
+        }
+
+    }
+
 
     private void setData() {
 
@@ -65,7 +105,7 @@ public class TravelsGraphActivity extends Activity {
         for (int i = 0; i < travels.size(); i++) {
             float[] values = new float[categories.size()];
             for (int j=0; j<categories.size(); j++) {
-                values[j] = (float) travels.get(i).getTotalExpensesByCategory( categories.get(j) );
+                values[j] = (float) travels.get(i).getTotalExpensesByCategoryInDefaultCurrency(categories.get(j));
             }
             yVals1.add(new BarEntry(values, i));
         }
@@ -75,13 +115,13 @@ public class TravelsGraphActivity extends Activity {
                 R.color.pie_chart_4, R.color.pie_chart_5, R.color.pie_chart_6}, this);
 
         set1.setStackLabels(categoryLabels);
-
+        
         ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
         dataSets.add(set1);
 
         BarData data = new BarData(xVals, dataSets);
         data.setValueFormatter(new DataValueFormater());
-
+        data.setValueFormatter(new moneyFormatter(user.getDefaultCurrency()));
         mChart.setData(data);
         mChart.invalidate();
 

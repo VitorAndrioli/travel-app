@@ -63,17 +63,24 @@ public class EditExpenseActivity extends Activity {
 
         if (value > 0)
             ((EditText) findViewById(R.id.value)).setText( String.valueOf( value ) );
+
         ((TextView) findViewById(R.id.date)).setText(sdf.format(expenseDate));
         ((EditText) findViewById(R.id.description)).setText( description );
 
         Uri imageUri = Uri.parse("android.resource://com.traveltrack.vitor.travelapp/drawable/" + category.getName() + "_big");
         ((ImageView) findViewById(R.id.picture)).setImageURI(imageUri);
+        ((ImageView) findViewById(R.id.picture)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeCategory();
+            }
+        });
 
         ((Button) findViewById(R.id.submit)).setText(getResources().getString(R.string.update));
 
     }
 
-    public void changeCategory(View view) {
+    public void changeCategory() {
         Intent intent = new Intent(this, CategoriesActivity.class);
         intent.putExtra("travelId", currentTravel.getId().toString());
         intent.putExtra("expenseId", expense.getId().toString());
