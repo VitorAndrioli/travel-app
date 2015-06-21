@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.traveltrack.vitor.orcamentour.HeaderFragment">
+    tools:context="com.traveltrack.vitor.travelapp.HeaderFragment">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -45,10 +45,12 @@
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/header_height"
                     android:orientation="horizontal"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp">
 
-                    <ImageView
+                    <ImageView android:id="@+id/user_picture_active"
                         android:layout_width="0dp"
                         android:layout_weight="0.4"
                         android:layout_height="wrap_content"
@@ -101,11 +103,13 @@
                 android:layout_height="@dimen/header_height"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
                 android:visibility="visible"
                 android:background="@color/dark_blue"
                 android:orientation="horizontal">
 
-                <ImageView
+                <ImageView android:id="@+id/user_picture"
                     android:layout_width="0dp"
                     android:layout_weight="0.4"
                     android:layout_height="wrap_content"

@@ -4,13 +4,13 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:animateLayoutChanges="true"
-    tools:context="com.traveltrack.vitor.orcamentour.TravelIndexActivity">
+    tools:context="com.traveltrack.vitor.travelapp.TravelIndexActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/header_height"
-        android:layout_above="@+id/footer"
+        android:layout_marginBottom="@dimen/footer_height"
         android:isScrollContainer="true">
 
             <LinearLayout
@@ -18,7 +18,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_marginBottom="@dimen/footer_height"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:paddingBottom="15dp"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin">
@@ -26,8 +26,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:onClick="changePicture">
+                    android:orientation="horizontal">
 
                     <ImageView android:id="@+id/picture"
                         android:layout_width="0dp"
@@ -36,7 +35,8 @@
                         android:background="@color/gray"
                         android:adjustViewBounds="true"
                         android:scaleType="centerInside"
-                        android:src="@drawable/default_profile_picture"/>
+                        android:src="@drawable/default_profile_picture"
+                        android:onClick="changePicture"/>
 
                     <Button
                         android:layout_width="0dp"
@@ -45,7 +45,8 @@
                         android:background="@drawable/light_green_background"
                         android:textColor="@color/dark_blue"
                         android:stateListAnimator="@null"
-                        android:text="@string/choose_picture"/>
+                        android:text="@string/choose_picture"
+                        android:onClick="changePicture"/>
 
                 </LinearLayout>
 
@@ -148,13 +149,12 @@
 
                     <TextView android:id="@+id/currency"
                         android:layout_width="0dp"
-                        android:layout_weight="0.7"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
                         android:layout_gravity="center"
                         android:paddingLeft="7dp"
-                        android:textColor="@color/dark_blue"
-                        android:text="@string/end" />
+                        android:textColor="@color/dark_blue" />
 
                 </LinearLayout>
 
@@ -168,11 +168,15 @@
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:onClick="submit"/>
 
-        </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/activity_vertical_margin"/>
+
+            </LinearLayout>
     </ScrollView>
 
     <fragment android:id="@+id/header"
-        android:name="com.traveltrack.vitor.orcamentour.HeaderFragment"
+        android:name="com.traveltrack.vitor.travelapp.HeaderFragment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         tools:layout="@layout/fragment_header" />

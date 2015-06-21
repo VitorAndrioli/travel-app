@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.traveltrack.vitor.orcamentour" >
+    package="com.traveltrack.vitor.travelapp" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -17,7 +17,7 @@
         tools:replace="android:icon,android:theme" >
         <meta-data
             android:name="DATABASE"
-            android:value="orcamentour.db" />
+            android:value="travelapp.db" />
         <meta-data
             android:name="VERSION"
             android:value="2" />
@@ -29,7 +29,7 @@
             android:value="com.traveltrack.vitor.travelapp" />
 
         <activity
-            android:name="com.traveltrack.vitor.orcamentour.SplashActivity"
+            android:name="com.traveltrack.vitor.travelapp.SplashActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
@@ -39,56 +39,56 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.traveltrack.vitor.orcamentour.LoginActivity"
+            android:name="com.traveltrack.vitor.travelapp.LoginActivity"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="stateHidden|adjustResize" >
         </activity>
         <activity
-            android:name="com.traveltrack.vitor.orcamentour.TravelIndexActivity"
+            android:name="com.traveltrack.vitor.travelapp.TravelIndexActivity"
             android:label="@string/title_activity_travels"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.traveltrack.vitor.orcamentour.TravelActivity"
+            android:name="com.traveltrack.vitor.travelapp.TravelActivity"
             android:label="@string/title_activity_travel" >
         </activity>
         <activity
-            android:name="com.traveltrack.vitor.orcamentour.NewTravelActivity"
+            android:name="com.traveltrack.vitor.travelapp.NewTravelActivity"
             android:label="@string/title_activity_new_travel"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
-            android:name="com.traveltrack.vitor.orcamentour.NewExpenseActivity"
+            android:name="com.traveltrack.vitor.travelapp.NewExpenseActivity"
             android:label="@string/title_activity_new_expense" >
         </activity>
         <activity
-            android:name="com.traveltrack.vitor.orcamentour.RegisterActivity"
+            android:name="com.traveltrack.vitor.travelapp.RegisterActivity"
             android:label="@string/title_activity_register"
             android:windowSoftInputMode="stateHidden|adjustResize" >
         </activity>
         <activity
-            android:name="com.traveltrack.vitor.orcamentour.ExpensesGraphActivity"
+            android:name="com.traveltrack.vitor.travelapp.ExpensesGraphActivity"
             android:label="@string/title_activity_graph" >
         </activity>
         <activity
-            android:name="com.traveltrack.vitor.orcamentour.TravelsGraphActivity"
+            android:name="com.traveltrack.vitor.travelapp.TravelsGraphActivity"
             android:label="@string/title_activity_travels_graph" >
         </activity>
         <activity
-            android:name="com.traveltrack.vitor.orcamentour.CategoriesActivity"
+            android:name="com.traveltrack.vitor.travelapp.CategoriesActivity"
             android:label="@string/title_activity_categories" >
         </activity>
         <activity
-            android:name="com.traveltrack.vitor.orcamentour.ProfileActivity"
+            android:name="com.traveltrack.vitor.travelapp.ProfileActivity"
             android:label="@string/title_activity_profile" >
         </activity>
         <activity
-            android:name="com.traveltrack.vitor.orcamentour.EditTravelActivity"
+            android:name="com.traveltrack.vitor.travelapp.EditTravelActivity"
             android:label="@string/title_activity_edit_travel" >
         </activity>
         <activity
-            android:name="com.traveltrack.vitor.orcamentour.EditExpenseActivity"
+            android:name="com.traveltrack.vitor.travelapp.EditExpenseActivity"
             android:label="@string/title_activity_edit_expense" >
         </activity>
     </application>

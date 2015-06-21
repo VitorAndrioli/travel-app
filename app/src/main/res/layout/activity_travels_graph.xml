@@ -4,7 +4,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:animateLayoutChanges="true"
-    tools:context="com.traveltrack.vitor.orcamentour.TravelIndexActivity">
+    tools:context="com.traveltrack.vitor.travelapp.TravelIndexActivity">
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart"
@@ -14,13 +14,13 @@
         android:layout_height="fill_parent" />
 
     <fragment android:id="@+id/header"
-        android:name="com.traveltrack.vitor.orcamentour.HeaderFragment"
+        android:name="com.traveltrack.vitor.travelapp.HeaderFragment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         tools:layout="@layout/fragment_header" />
 
     <fragment android:id="@+id/footer"
-        android:name="com.traveltrack.vitor.orcamentour.MainFooterFragment"
+        android:name="com.traveltrack.vitor.travelapp.MainFooterFragment"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/footer_height"
         android:layout_alignParentBottom="true"
