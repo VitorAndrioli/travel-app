@@ -61,15 +61,14 @@ public class TravelIndexActivity extends Activity {
 
             if (travel.getStart() != null && travel.getEnd() != null)
                 date.setText(sdf.format( travel.getStart() ) + " - " + sdf.format( travel.getEnd() ));
+            else
+                date.setVisibility(View.GONE);
 
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
             options.inSampleSize = 1;
             BitmapFactory.decodeFile(travel.getImageURI(), options);
-            int imageHeight = options.outHeight;
-            int imageWidth = options.outWidth;
-            String imageType = options.outMimeType;
 
             if (travel.getImageURI() != null) {
                 picture.setImageBitmap(decodeSampledBitmapFromResource(travel.getImageURI(), 300, 90));

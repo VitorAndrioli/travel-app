@@ -63,6 +63,20 @@
                     android:layout_marginTop="10dp"
                     android:inputType="text"/>
 
+                <EditText android:id="@+id/budget"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/budget"
+                    android:background="@drawable/light_green_border"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/dark_blue"
+                    android:paddingBottom="@dimen/input_text_vertical_padding"
+                    android:paddingTop="@dimen/input_text_vertical_padding"
+                    android:paddingLeft="@dimen/input_text_horizontal_padding"
+                    android:paddingRight="@dimen/input_text_horizontal_padding"
+                    android:layout_marginTop="10dp"
+                    android:inputType="numberDecimal"/>
+
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -70,11 +84,11 @@
                     android:orientation="horizontal">
 
 
-                    <EditText android:id="@+id/budget"
+                    <EditText android:id="@+id/exchange_rate"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:hint="@string/budget"
+                        android:hint="@string/exchange_rate"
                         android:background="@drawable/light_green_border"
                         android:textColorHint="@color/gray"
                         android:textColor="@color/dark_blue"
@@ -113,7 +127,7 @@
                             android:layout_gravity="center"
                             android:paddingLeft="7dp"
                             android:textColor="@color/dark_blue"
-                            android:text="@string/end" />
+                            android:text="@string/currency" />
 
                     </LinearLayout>
 

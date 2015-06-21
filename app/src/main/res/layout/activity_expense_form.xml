@@ -25,7 +25,8 @@
                 android:layout_height="100dp"
                 android:background="@color/light_green"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter"
+                android:onClick="changeCategory"/>
 
             <LinearLayout android:id="@+id/focus_holder" android:orientation="vertical"
                 android:focusable="true" android:focusableInTouchMode="true"

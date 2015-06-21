@@ -40,16 +40,26 @@ public class EditExpenseActivity extends Activity {
         setContentView(R.layout.activity_expense_form);
 
         Intent intent = getIntent();
-        int expenseId = Integer.parseInt(intent.getStringExtra("expenseId"));
+        long expenseId = Long.parseLong( intent.getStringExtra("expenseId") );
         expense = Expense.findById(Expense.class, expenseId);
 
+
         currentTravel = expense.getTravel();
-        category = expense.getCategory();
         user = expense.getUser();
 
         value = expense.getValue();
         expenseDate = expense.getDate();
         description = expense.getDescription();
+
+        String categoryName = intent.getStringExtra("categoryName");
+        if (categoryName != null) {
+            Category newCategory = Category.find(Category.class, "name = ?", categoryName).get(0);
+            category = newCategory;
+        } else {
+            category = expense.getCategory();
+        }
+
+
 
         if (value > 0)
             ((EditText) findViewById(R.id.value)).setText( String.valueOf( value ) );
@@ -60,6 +70,14 @@ public class EditExpenseActivity extends Activity {
         ((ImageView) findViewById(R.id.picture)).setImageURI(imageUri);
 
         ((Button) findViewById(R.id.submit)).setText(getResources().getString(R.string.update));
+
+    }
+
+    public void changeCategory(View view) {
+        Intent intent = new Intent(this, CategoriesActivity.class);
+        intent.putExtra("travelId", currentTravel.getId().toString());
+        intent.putExtra("expenseId", expense.getId().toString());
+        startActivity(intent);
 
     }
 

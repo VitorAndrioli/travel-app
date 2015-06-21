@@ -12,7 +12,7 @@ public class Travel extends SugarRecord<Travel> {
     private String imageURI;
     private Currency currency;
     private float exchangeRate;
-    public String sufix;
+    public String suffix;
 
     public Travel() {}
 
@@ -99,17 +99,28 @@ public class Travel extends SugarRecord<Travel> {
     }
 
     public void setName(String name, User user) {
-        int travelsWithSameName = Travel.find(Travel.class, "name = ? and user = ?", this.name, user.getId().toString()).size();
+        if (!name.equals( this.name )) {
+            int travelsWithSameName = Travel.findWithQuery(Travel.class,
+                    "SELECT * FROM Travel INNER JOIN Travel_user ON Travel.id = Travel_user.travel WHERE Travel.name = ? AND Travel_user.user = ?",
+                    name,
+                    user.getId().toString()
+            ).size();
 
-        if (travelsWithSameName > 0) {
-            this.sufix = " - " + travelsWithSameName;
+            if (travelsWithSameName > 0) {
+                this.suffix = " - " + (travelsWithSameName + 1);
+            }
+
+            this.name = name;
         }
-
-        this.name = name;
     }
 
     public String getName() {
-        return this.name + this.sufix;
+        String name = this.name;
+        if (this.suffix != null) {
+            name += this.suffix;
+        }
+
+        return name;
     }
 
     public void setImageURI(String uri) {

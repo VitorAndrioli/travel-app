@@ -31,7 +31,8 @@
         <activity
             android:name="com.traveltrack.vitor.travelapp.SplashActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,15 +42,17 @@
         <activity
             android:name="com.traveltrack.vitor.travelapp.LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.traveltrack.vitor.travelapp.TravelIndexActivity"
             android:label="@string/title_activity_travels"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.traveltrack.vitor.travelapp.TravelActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_travel" >
         </activity>
         <activity
@@ -60,35 +63,43 @@
         </activity>
         <activity
             android:name="com.traveltrack.vitor.travelapp.NewExpenseActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_new_expense" >
         </activity>
         <activity
             android:name="com.traveltrack.vitor.travelapp.RegisterActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_register"
             android:windowSoftInputMode="stateHidden|adjustResize" >
         </activity>
         <activity
             android:name="com.traveltrack.vitor.travelapp.ExpensesGraphActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_graph" >
         </activity>
         <activity
             android:name="com.traveltrack.vitor.travelapp.TravelsGraphActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_travels_graph" >
         </activity>
         <activity
             android:name="com.traveltrack.vitor.travelapp.CategoriesActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_categories" >
         </activity>
         <activity
             android:name="com.traveltrack.vitor.travelapp.ProfileActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_profile" >
         </activity>
         <activity
             android:name="com.traveltrack.vitor.travelapp.EditTravelActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_edit_travel" >
         </activity>
         <activity
             android:name="com.traveltrack.vitor.travelapp.EditExpenseActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_edit_expense" >
         </activity>
     </application>

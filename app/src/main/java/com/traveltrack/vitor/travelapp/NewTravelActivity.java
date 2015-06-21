@@ -44,6 +44,7 @@ public class NewTravelActivity extends Activity {
     private Date beginning;
     private Date end;
     private Currency currency;
+    private float exchangeRate;
 
     private Calendar myCalendar;
     private DatePickerDialog.OnDateSetListener date;
@@ -97,12 +98,15 @@ public class NewTravelActivity extends Activity {
         String budgetText = ((EditText) findViewById(R.id.budget)).getText().toString();
         double budget = budgetText.isEmpty() ? 0 : Double.parseDouble(budgetText);
 
+        String exchangeRateText = ((EditText) findViewById(R.id.exchange_rate)).getText().toString();
+        exchangeRate = exchangeRateText.isEmpty() ? 1 : Float.parseFloat(exchangeRateText);
+
         travel = new Travel(name,
                 selectedImageUri == null ? null : selectedImageUri.toString(),
                 beginning,
                 end,
                 currency,
-                1,
+                exchangeRate,
                 user);
 
         travel.save();
@@ -223,7 +227,6 @@ public class NewTravelActivity extends Activity {
     public String getPath(Uri uri) {
         // just some safety built in
         if( uri == null ) {
-            // TODO perform some logging or show user feedback
             return null;
         }
         // try to retrieve the image from the media store first

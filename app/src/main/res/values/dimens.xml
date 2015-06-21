@@ -9,4 +9,7 @@
     <dimen name="input_text_horizontal_padding">10dp</dimen>
     <dimen name="input_text_vertical_padding">7dp</dimen>
 
+    <dimen name="button_padding">11dp</dimen>
+    <dimen name="button_text_size">20dp</dimen>
+
 </resources>

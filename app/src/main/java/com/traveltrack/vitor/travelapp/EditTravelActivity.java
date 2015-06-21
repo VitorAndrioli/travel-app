@@ -47,6 +47,7 @@ public class EditTravelActivity extends Activity {
     private String name;
     private TravelUser travelUser;
     private double budget;
+    private float exchangeRate;
 
 
     private Calendar myCalendar;
@@ -73,12 +74,15 @@ public class EditTravelActivity extends Activity {
         start = travel.getStart();
         end = travel.getEnd();
         currency = travel.getCurrency();
+        exchangeRate = travel.getExchangeRate();
         selectedImageUri =  ( selectedImageUri == null ) ? null : Uri.parse( travel.getImageURI() );
 
         if ( !name.isEmpty() )
             ((EditText) findViewById(R.id.travel_name)).setText( name );
 
         ((EditText) findViewById(R.id.budget)).setText( String.valueOf( budget ) );
+
+        ((EditText) findViewById(R.id.exchange_rate)).setText( String.valueOf( exchangeRate ) );
 
         ((TextView) findViewById(R.id.currency)).setText( currency.getCode() );
 
@@ -128,13 +132,20 @@ public class EditTravelActivity extends Activity {
         String budgetText = ((EditText) findViewById(R.id.budget)).getText().toString();
         double budget = budgetText.isEmpty() ? 0 : Double.parseDouble(budgetText);
 
+        String exchangeRateText = ((EditText) findViewById(R.id.exchange_rate)).getText().toString();
+        exchangeRate = exchangeRateText.isEmpty() ? 0 : Float.parseFloat( exchangeRateText );
+
         travel.update(name,
                 selectedImageUri == null ? null : selectedImageUri.toString(),
                 start,
                 end,
                 currency,
-                1,
+                exchangeRate,
                 user);
+
+        TravelUser travelUser = TravelUser.find(TravelUser.class, "travel = ? and user = ?", travel.getId().toString(), user.getId().toString()).get(0);
+        travelUser.setBudget( budget );
+        travelUser.save();
 
         Intent intent = new Intent(EditTravelActivity.this, TravelActivity.class);
         intent.putExtra("travelId", travel.getId().toString());
