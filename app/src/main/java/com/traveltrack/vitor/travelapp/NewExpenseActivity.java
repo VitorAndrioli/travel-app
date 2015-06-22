@@ -69,6 +69,7 @@ public class NewExpenseActivity extends Activity {
         Intent intent = new Intent(this, TravelActivity.class);
         intent.putExtra("travelId", currentTravel.getId().toString());
         startActivity(intent);
+        finish();
 
     }
 

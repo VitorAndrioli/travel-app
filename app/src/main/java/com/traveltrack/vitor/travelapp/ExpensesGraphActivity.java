@@ -41,6 +41,8 @@ public class ExpensesGraphActivity extends Activity {
         user = User.findById(User.class, userId);
         currentTravel = Travel.findById(Travel.class, travelId);
 
+        ((TextView) findViewById(R.id.title)).setText( currentTravel.getName() );
+
         mChart = (PieChart) findViewById(R.id.chart);
         mChart.setUsePercentValues(false);
         mChart.setDescription("");
@@ -120,7 +122,7 @@ public class ExpensesGraphActivity extends Activity {
         PieData data = new PieData(xVals, dataSet);
         data.setValueTextSize(11f);
         data.setValueTextColor(Color.WHITE);
-        data.setValueFormatter( new moneyFormatter( currentTravel.getCurrency() ) );
+        data.setValueFormatter( new PieChatValueFormatter( currentTravel.getCurrency(), currentTravel.getTotalExpensesInDefaultCurrency() ) );
         mChart.setData(data);
 
         // undo all highlights

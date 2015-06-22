@@ -4,18 +4,19 @@ import com.github.mikephil.charting.utils.ValueFormatter;
 
 import java.text.DecimalFormat;
 
-public class moneyFormatter implements ValueFormatter {
+public class BarChartValueFormatter implements ValueFormatter {
 
     private DecimalFormat mFormat;
     private Currency currency;
 
-    public moneyFormatter(Currency currency) {
-        mFormat = new DecimalFormat("###,###,##0.0"); // use one decimal
+    public BarChartValueFormatter(Currency currency) {
+        mFormat = new DecimalFormat("###,###,##0.00");
         this.currency = currency;
     }
 
     @Override
     public String getFormattedValue(float value) {
-        return this.currency.getSymbol() + " " + mFormat.format(value); // append a dollar-sign
+        return this.currency.getSymbol() + " " + mFormat.format(value);
+
     }
 }

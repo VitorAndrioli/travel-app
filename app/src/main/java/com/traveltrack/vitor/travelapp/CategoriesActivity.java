@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-
 public class CategoriesActivity extends Activity {
     private Travel currentTravel;
     private long expenseId;
@@ -37,6 +36,7 @@ public class CategoriesActivity extends Activity {
         intent.putExtra("categoryName", categoryName);
         intent.putExtra("travelId", currentTravel.getId().toString());
         startActivity(intent);
+        finish();
     }
 
     public void goBack(View view) {
@@ -54,6 +54,7 @@ public class CategoriesActivity extends Activity {
         Intent intent = new Intent(this, ExpensesGraphActivity.class);
         intent.putExtra("travelId", currentTravel.getId().toString());
         startActivity(intent);
+        finish();
     }
 
     @Override
@@ -62,4 +63,7 @@ public class CategoriesActivity extends Activity {
         findViewById(R.id.add_expense).setBackgroundColor(getResources().getColor(R.color.light_green));
         findViewById(R.id.add_expense).setClickable(false);
     }
+
+
+
 }

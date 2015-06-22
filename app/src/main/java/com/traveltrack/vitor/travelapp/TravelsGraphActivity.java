@@ -115,13 +115,13 @@ public class TravelsGraphActivity extends Activity {
                 R.color.pie_chart_4, R.color.pie_chart_5, R.color.pie_chart_6}, this);
 
         set1.setStackLabels(categoryLabels);
-        
+
         ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
         dataSets.add(set1);
 
         BarData data = new BarData(xVals, dataSets);
         data.setValueFormatter(new DataValueFormater());
-        data.setValueFormatter(new moneyFormatter(user.getDefaultCurrency()));
+        data.setValueFormatter(new BarChartValueFormatter(user.getDefaultCurrency()));
         mChart.setData(data);
         mChart.invalidate();
 

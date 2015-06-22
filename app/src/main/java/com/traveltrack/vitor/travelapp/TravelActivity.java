@@ -60,42 +60,7 @@ public class TravelActivity extends Activity {
             ((ImageView) findViewById(R.id.picture)).setImageURI(parse(currentTravel.getImageURI()));
 
 
-        List<Expense> expenses = currentTravel.getExpenses();
 
-        View expensesList = findViewById(R.id.expenses_list);
-        LinearLayout expenseField = (LinearLayout)getLayoutInflater().inflate(R.layout.expense, null);
-
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        expenseField.setLayoutParams(lp);
-
-
-        for (int i=0; i< expenses.size(); i++) {
-            View row = null;
-            LayoutInflater inflater = this.getLayoutInflater();
-
-            Expense expense = expenses.get(i);
-            row = inflater.inflate(R.layout.expense, null);
-            row.setTag(expense.getId());
-
-            TextView value = (TextView) row.findViewById(R.id.value);
-            TextView date = (TextView) row.findViewById(R.id.date);
-            TextView description = (TextView) row.findViewById(R.id.description);
-            ImageView category = (ImageView) row.findViewById(R.id.category);
-
-            value.setText(String.valueOf( expense.toString() ));
-            date.setText(sdf.format(expense.getDate()));
-            if (expense.getDescription().isEmpty()) {
-                row.findViewById(R.id.border).setVisibility(View.GONE);
-            } else
-                description.setText(String.valueOf(expense.getDescription()));
-            category.setImageURI(Uri.parse(expense.getCategory().getURI()));
-
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 90);
-            params.setMargins(0, 10, 0, 0);
-            row.setLayoutParams(params);
-
-            ((LinearLayout) expensesList).addView(row);
-        }
     }
 
     public void updateExpenses() {
@@ -173,4 +138,47 @@ public class TravelActivity extends Activity {
         expenseToRemove = null;
         warning.setVisibility(View.GONE);
     }
+
+    @Override
+    public void onResume() {
+        List<Expense> expenses = currentTravel.getExpenses();
+
+        LinearLayout expensesList = (LinearLayout) findViewById(R.id.expenses_list);
+        expensesList.removeAllViews();
+        LinearLayout expenseField = (LinearLayout)getLayoutInflater().inflate(R.layout.expense, null);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        expenseField.setLayoutParams(lp);
+
+
+        for (int i=0; i< expenses.size(); i++) {
+            View row = null;
+            LayoutInflater inflater = this.getLayoutInflater();
+
+            Expense expense = expenses.get(i);
+            row = inflater.inflate(R.layout.expense, null);
+            row.setTag(expense.getId());
+
+            TextView value = (TextView) row.findViewById(R.id.value);
+            TextView date = (TextView) row.findViewById(R.id.date);
+            TextView description = (TextView) row.findViewById(R.id.description);
+            ImageView category = (ImageView) row.findViewById(R.id.category);
+
+            value.setText(String.valueOf( expense.toString() ));
+            date.setText(sdf.format(expense.getDate()));
+            if (expense.getDescription().isEmpty()) {
+                row.findViewById(R.id.border).setVisibility(View.GONE);
+            } else
+                description.setText(String.valueOf(expense.getDescription()));
+            category.setImageURI(Uri.parse(expense.getCategory().getURI()));
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 90);
+            params.setMargins(0, 10, 0, 0);
+            row.setLayoutParams(params);
+
+            ((LinearLayout) expensesList).addView(row);
+        }
+        super.onResume();
+    }
+
 }

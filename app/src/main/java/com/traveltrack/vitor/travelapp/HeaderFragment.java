@@ -28,6 +28,7 @@ public class HeaderFragment extends Fragment {
     private ImageView userPicture;
     private ImageView userPictureActive;
 
+    private View view;
     public HeaderFragment() {
         // Required empty public constructor
     }
@@ -37,10 +38,15 @@ public class HeaderFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view = inflater.inflate(R.layout.fragment_header, container, false);
+        view = inflater.inflate(R.layout.fragment_header, container, false);
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
 
         SharedPreferences shared_preferences = getActivity().getSharedPreferences("USER_DATA", 0);
         long userId = shared_preferences.getLong("userId", 0);
@@ -114,7 +120,8 @@ public class HeaderFragment extends Fragment {
             }
         });
 
-        return view;
+        super.onResume();
+
     }
 
     public void goToHome() {
@@ -133,7 +140,7 @@ public class HeaderFragment extends Fragment {
     public void logout() {
         SharedPreferences shared_preferences = getActivity().getSharedPreferences("USER_DATA", 0);
         SharedPreferences.Editor editor = shared_preferences.edit();
-        editor.remove("user_id");
+        editor.remove("userId");
         editor.commit();
 
         Intent intent = new Intent(getActivity(), LoginActivity.class);

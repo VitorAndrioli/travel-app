@@ -210,11 +210,7 @@ public class ProfileActivity extends Activity {
                 }).create().show();
     }
 
-
-
     public void goBack(View view) {
-        Intent intent = new Intent(this, TravelIndexActivity.class);
-        startActivity(intent);
         finish();
     }
 }
